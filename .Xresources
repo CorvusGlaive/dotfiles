@@ -1,0 +1,126 @@
+URxvt*scrollBar:	false
+URxvt*font:		xft:RobotoMonoMedium:size=10
+
+!======Hybrid Theme====
+! special
+*.foreground:   #c5c8c6
+*.background:   #1d1f21
+*.cursorColor:  #c5c8c6
+
+! black
+*.color0:       #282a2e
+*.color8:       #373b41
+
+! red
+*.color1:       #a54242
+*.color9:       #cc6666
+
+! green
+*.color2:       #8c9440
+*.color10:      #b5bd68
+
+! yellow
+*.color3:       #de935f
+*.color11:      #f0c674
+
+! blue
+*.color4:       #5f819d
+*.color12:      #81a2be
+
+! magenta
+*.color5:       #85678f
+*.color13:      #b294bb
+
+! cyan
+*.color6:       #5e8d87
+*.color14:      #8abeb7
+
+! white
+*.color7:       #707880
+*.color15:      #c5c8c6
+
+
+!======================
+!*background: #09030F
+!*foreground: #e8e3e7
+!*cursor: #e8e3e7
+
+! Colors
+!*color0: #09030F
+!*color1: #DD6269
+!*color2: #F78337
+!*color3: #303199
+!*color4: #4A3994
+!*color5: #634898
+!*color6: #5427C9
+!*color7: #c6a4bc
+!*color8: #8a7283
+!*color9: #DD6269
+!*color10: #F78337
+!*color11: #303199
+!*color12: #4A3994
+!*color13: #634898
+!*color14: #5427C9
+!*color15: #c6a4bc
+
+!!! Gruvbox theme
+!hard contrast: *background: #1d2021
+!*background: #282828
+!soft contrast: *background: #32302f
+!*foreground: #ebdbb2
+!Black + DarkGrey
+!*color0:  #282828
+!*color8:  #928374
+!DarkRed + Red
+!*color1:  #cc241d
+!*color9:  #fb4934
+!DarkGreen + Green
+!*color2:  #98971a
+!*color10: #b8bb26
+!DarkYellow + Yellow
+!*color3:  #d79921
+!*color11: #fabd2f
+!DarkBlue + Blue
+!*color4:  #458588
+!*color12: #83a598
+!DarkMagenta + Magenta
+!*color5:  #b16286
+!*color13: #d3869b
+!DarkCyan + Cyan
+!*color6:  #689d6a
+!*color14: #8ec07c
+!LightGrey + White
+!*color7:  #a89984
+!*color15: #ebdbb2
+
+! Extended 256 color palette: requires 'rxvt-unicode-256xresources' package
+!URxvt.color24:  #076678
+!URxvt.color66:  #427b58
+!URxvt.color88:  #9d0006
+!URxvt.color96:  #8f3f71
+!URxvt.color100: #79740e
+!URxvt.color108: #8ec07c
+!URxvt.color109: #83a598
+!URxvt.color130: #af3a03
+!URxvt.color136: #b57614
+!URxvt.color142: #b8bb26
+!URxvt.color167: #fb4934
+!URxvt.color175: #d3869b
+!URxvt.color208: #fe8019
+!URxvt.color214: #fabd2f
+!URxvt.color223: #ebdbb2
+!URxvt.color228: #f2e5bc
+!URxvt.color229: #fbf1c7
+!URxvt.color230: #f9f5d7
+!URxvt.color234: #1d2021
+!URxvt.color235: #282828
+!URxvt.color236: #32302f
+!URxvt.color237: #3c3836
+!URxvt.color239: #504945
+!URxvt.color241: #665c54
+!URxvt.color243: #7c6f64
+!URxvt.color244: #928374
+!URxvt.color245: #928374
+!URxvt.color246: #a89984
+!URxvt.color248: #bdae93
+!URxvt.color250: #d5c4a1

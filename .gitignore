@@ -1,0 +1,17 @@
+*
+# !*/
+!.gitignore
+
+!.Xresources
+!.bashrc
+
+!.config/
+!.config/*/
+
+!.config/picom.conf
+!.config/awesome/**
+!.config/bspwm/**
+!.config/sxhkd/**
+!.config/polybar/**
+!.config/i3/**
+!.config/rofi/**
