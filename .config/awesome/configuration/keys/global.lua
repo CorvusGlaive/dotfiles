@@ -6,6 +6,8 @@ local gears = require("gears")
 local modkey = require('configuration.keys.mod').modKey
 local altkey = require('configuration.keys.mod').altKey
 local terminal = require("configuration.apps").defualt.terminal
+local audio = require('scripts').audio
+local rofi = require('configuration.apps').defualt.rofi
 
 
 local menubar = require("menubar")
@@ -63,6 +65,8 @@ local globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", _G.awesome.quit,
               {description = "quit awesome", group = "awesome"}),
+    awful.key({ altkey, "Control" }, "Return", function() awful.spawn(rofi) end,
+              {description = "open rofi", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -112,9 +116,27 @@ local globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- Media key
-    awful.key({     }, "XF86AudioRaiseVolume", function() awful.spawn("pulseaudio-ctl up"); toggleVolOSD() end, {description = "Increase volume by 5%", group = "Media Key"}),
-    awful.key({     }, "XF86AudioLowerVolume", function() awful.spawn("pulseaudio-ctl down"); toggleVolOSD() end, {description = "Decrease volume by 5%", group = "Media Key"}),
-    awful.key({     }, "XF86AudioMute", function() awful.spawn("pulseaudio-ctl mute"); toggleVolOSD() end, {description = "Mute", group = "Media Key"})
+    awful.key({     }, "XF86AudioRaiseVolume",
+        function()
+            -- awful.spawn.easy_async(audio.up, function()end)
+            awful.spawn.easy_async('pulseaudio-ctl up', function()end)
+            toggleVolOSD()
+        end,
+        {description = "Increase volume by 5%", group = "Media Key"}),
+    awful.key({     }, "XF86AudioLowerVolume",
+        function()
+            -- awful.spawn.easy_async(audio.down, function()end)
+            awful.spawn.easy_async('pulseaudio-ctl down', function()end)
+            toggleVolOSD()
+        end,
+        {description = "Decrease volume by 5%", group = "Media Key"}),
+    awful.key({     }, "XF86AudioMute",
+        function()
+            -- awful.spawn.easy_async(audio.togmute, function()end)
+            awful.spawn.easy_async('pulseaudio-ctl mute', function()end)
+            toggleVolOSD()
+        end,
+        {description = "Mute", group = "Media Key"})
 )
 
 -- Bind all key numbers to tags.

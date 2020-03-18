@@ -42,7 +42,8 @@ awful.rules.rules = {
           "xtightvncviewer",
           "Nvidia-settings",
           "Pavucontrol",
-          "Org.gnome.Nautilus"
+          "Org.gnome.Nautilus",
+          "Gnome-system-monitor"
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -91,8 +92,10 @@ awful.rules.rules = {
         placement = awful.placement.centered,
         ontop = true,
         floating = true,
-        shape = function(cr,w,h)
-          gears.shape.rounded_rect(cr, w, h, 8)
+        shape = function()
+          return function(cr,w,h)
+            gears.shape.rounded_rect(cr, w, h, 8)
+          end
         end,
         skip_decoration = true,
        }
@@ -109,8 +112,10 @@ awful.rules.rules = {
         properties = {
           skip_decoration = true,
           border_width = 0,
-          shape = function (cr,w,h)
-            gears.shape.rectangle(cr,w,h)
+          shape = function()
+            return function (cr,w,h)
+              gears.shape.rectangle(cr,w,h)
+            end
           end
       }
     }

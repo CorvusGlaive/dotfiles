@@ -20,7 +20,11 @@ local LayoutBox = function(s)
             awful.button({ }, 5, function () awful.layout.inc(-1) end)
         )
     )
-    return lb
+    return wibox.widget {
+        widget = wibox.container.margin,
+        margins = 4,
+        lb
+    }
 end
 
 local TopPanel = function(s)
