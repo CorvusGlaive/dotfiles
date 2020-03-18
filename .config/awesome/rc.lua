@@ -31,6 +31,8 @@ require("configuration.client")
 require("configuration.tags")
 --Widgets
 require("widget.volume-osd")
+--Daemons
+require("module.audio-daemon")
 -- Set keys
 _G.root.keys(require("configuration.keys.global"))
 

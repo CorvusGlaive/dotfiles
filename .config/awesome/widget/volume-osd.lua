@@ -44,41 +44,29 @@ local volumeOverlay = function (s)
         }
     }
     local hideOSD = gears.timer {
-        timeout = 5,
+        timeout = 3,
         autostart = true,
         callback  = function()
         volume_widget.visible = false
         end
     }
-    local volume_subscribe = [[
-        bash -c '
-        pactl subscribe 2> /dev/null | grep --line-buffered "sink"
-    ']]
-    local volume_status = 'pulseaudio-ctl full-status'
+
     local showVolumeOSD = false
 
     function toggleVolOSD()
         showVolumeOSD = true
     end
 
-    -- awful.spawn.easy_async_with_shell("ps x | grep \"pactl subscribe\" | grep -v grep | awk '{print $1}' | xargs kill", function ()
-        -- Run emit_volume_info() with each line printed
-        awful.spawn.with_line_callback(volume_subscribe, {
-            stdout = function()
-                awful.spawn.easy_async(volume_status,function(s)
-                    if not showVolumeOSD then return end
-                    local vol, isMuted = s:match('(%d+)%s(%a+)%s')
-                    volume_value.text = vol .. "%"
-                    volume_bar.value = tonumber(vol)
-                    volume_widget.visible = true
-                    if isMuted == "yes" then volume_bar.color = "#8c8c8c"
-                    else volume_bar.color = "#94cc9a" end
-                    hideOSD:again()
-                    showVolumeOSD = false
-                end)
-            end
-        })
-    -- end)
+    _G.awesome.connect_signal("daemon::audio",function(dev)
+        if not showVolumeOSD then return end
+        volume_value.text = tostring(dev.vol) .. "%"
+        volume_bar.value = dev.vol
+        volume_widget.visible = true
+        if dev.isMuted then volume_bar.color = "#8c8c8c"
+        else volume_bar.color = "#94cc9a" end
+        hideOSD:again()
+        showVolumeOSD = false
+    end)
 
     return volume_widget
 end
