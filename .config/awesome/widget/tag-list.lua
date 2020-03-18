@@ -25,7 +25,7 @@ local taglist_buttons = gears.table.join(
 local TagList = function(s)
     return awful.widget.taglist{
         screen = s,
-        filter = awful.widget.taglist.filter.all,
+        filter = awful.widget.taglist.filter.noempty,
         buttons = taglist_buttons,
         -- style   = {
         --     shape = gears.shape.rounded_rect
