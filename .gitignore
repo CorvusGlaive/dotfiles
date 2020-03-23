@@ -8,6 +8,13 @@
 !.config/
 !.config/*/
 
+#-----zsh-----
+!.zshenv
+!.config/zsh/**
+.config/zsh/pure
+.config/zsh/.zcompdump
+# ------------
+
 !.config/picom.conf
 !.config/awesome/**
 !.config/bspwm/**
