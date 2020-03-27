@@ -19,7 +19,7 @@ local vol_icons = {
     [3] =  "墳 ",
     [4] =  " "
 }
-local curDevice_icon = ' ' --Defualt sink icon if there is no matched devices
+local curDevice_icon = ' ' --Defualt sink icon if there are no matched devices
 
 
 local function getCurDeviceIcon(name)
@@ -30,6 +30,7 @@ local function getCurDeviceIcon(name)
 end
 
 local function getCurVolumeIcon(vol)
+    vol = (vol == nil) and 0 or vol
     local vol_split = math.floor(100 / #vol_icons - 1)
     local icon = ''
     if vol == 0 then return vol_icons[1] end
@@ -71,6 +72,7 @@ pulse_control:buttons(
 _G.awesome.connect_signal("daemon::audio", function (dev)
     local volIcon = getCurVolumeIcon(dev.vol)
     local devIcon = getCurDeviceIcon(dev.name)
+    dev.vol = (dev.vol == nil) and 0 or dev.vol
     if not dev.isMuted then
         pulse_control.markup = volIcon .. dev.vol .. "%" .. 
         "<span font='SymbolsNerdFont 11'>  " .. devIcon .. "</span>"
