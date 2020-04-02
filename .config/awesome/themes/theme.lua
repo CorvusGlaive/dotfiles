@@ -15,7 +15,7 @@ theme.font          = "RobotoMedium 10"
 theme.title_font    = 'RobotoMedium 14'
 
 theme.bg_normal     = "#333333"
-theme.bg_focus      = "#9a94cc"
+theme.bg_focus      = "#408cdd"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
@@ -49,7 +49,7 @@ theme.wibar_bg = "#ff0000"
 -- Example:
 
 --Top panel-----------------------
-theme.top_panel_bg = "#222222b3"
+theme.top_panel_bg = "#22222299"
 theme.top_panel_height = dpi(25)
 ----------------------------------
 
@@ -60,7 +60,7 @@ theme.tasklist_fg_focus = "#fff"
 ----------------------------------
 
 --TagList-------------------------
-theme.taglist_font = "JetBrainsMonoMedium 10"
+theme.taglist_font = "Inter SemiBold 10"
 
 theme.taglist_bg_normal = "#00000000"
 theme.taglist_bg_focus = "#fccf050000"
@@ -142,7 +142,7 @@ theme.titlebar_maximized_button_focus_active  = themes_path.."titlebar/maximized
 
 -- theme.wallpaper = themes_path.."default/background.png"
 -- theme.wallpaper = "~/Pictures/pawel-czerwinski-pkHrzNAP2ZQ-unsplash.jpg"
-theme.wallpaper = "~/Pictures/ivana-cajina-YAt2KX0JVdE-unsplash.jpg"
+-- theme.wallpaper = "~/Pictures/levi-midnight-UBp1NAYi7KU-unsplash.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."layouts/fairhw.png"
