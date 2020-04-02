@@ -14,3 +14,6 @@ export LESS_TERMCAP_me=$(tput sgr0)
 
 alias cfg='/usr/bin/git --git-dir=$HOME/.git/ --work-tree=$HOME'
 alias ls='ls --color=auto'
+alias r='ranger'
+alias n='nano'
+alias sn='sudo nano'
