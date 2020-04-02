@@ -46,7 +46,6 @@ local TopPanel = function(s)
             layout = wibox.layout.fixed.horizontal,
             -- mylauncher,
             TagList(s),
-            awful.widget.prompt(),
             TaskList(s),
         },
         require("widget.clock"),

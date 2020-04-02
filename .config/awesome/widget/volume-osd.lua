@@ -1,6 +1,7 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local gears = require("gears")
+local beautiful = require("beautiful")
 
 local volumeOverlay = function (s)
     local w = dpi(300)
@@ -46,8 +47,9 @@ local volumeOverlay = function (s)
     local hideOSD = gears.timer {
         timeout = 3,
         autostart = true,
+        single_shot = true,
         callback  = function()
-        volume_widget.visible = false
+            volume_widget.visible = false
         end
     }
 
@@ -58,12 +60,15 @@ local volumeOverlay = function (s)
     end
 
     _G.awesome.connect_signal("daemon::audio",function(dev)
-        if not showVolumeOSD then return end
+        if not showVolumeOSD and not volume_widget.visible then return end
+
         volume_value.text = tostring(dev.vol) .. "%"
         volume_bar.value = dev.vol
         volume_widget.visible = true
+
         if dev.isMuted then volume_bar.color = "#8c8c8c"
-        else volume_bar.color = "#94cc9a" end
+        else volume_bar.color = beautiful.bg_focus or "#94cc9a" end
+
         hideOSD:again()
         showVolumeOSD = false
     end)

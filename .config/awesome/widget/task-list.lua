@@ -94,8 +94,7 @@ local function list_update(w, buttons, label, data, objects)
         tbm:set_margins(0)
       else
         -- truncate when title is too long
-        local textOnly = text:match('>(.-)<')
-
+        local textOnly = text:match('</b>(.-)</span>') or text:match('>(.-)<')
         tt:set_text(textOnly)
         tt:add_to_object(tb)
 

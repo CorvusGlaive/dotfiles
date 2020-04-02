@@ -118,22 +118,19 @@ local globalkeys = gears.table.join(
     -- Media key
     awful.key({     }, "XF86AudioRaiseVolume",
         function()
-            -- awful.spawn.easy_async(audio.up, function()end)
-            awful.spawn.easy_async('pulseaudio-ctl up', function()end)
+            awful.spawn.easy_async(audio.up, function()end)
             toggleVolOSD()
         end,
         {description = "Increase volume by 5%", group = "Media Key"}),
     awful.key({     }, "XF86AudioLowerVolume",
         function()
-            -- awful.spawn.easy_async(audio.down, function()end)
-            awful.spawn.easy_async('pulseaudio-ctl down', function()end)
+            awful.spawn.easy_async(audio.down, function()end)
             toggleVolOSD()
         end,
         {description = "Decrease volume by 5%", group = "Media Key"}),
     awful.key({     }, "XF86AudioMute",
         function()
-            -- awful.spawn.easy_async(audio.togmute, function()end)
-            awful.spawn.easy_async('pulseaudio-ctl mute', function()end)
+            awful.spawn.easy_async(audio.togmute, function()end)
             toggleVolOSD()
         end,
         {description = "Mute", group = "Media Key"})

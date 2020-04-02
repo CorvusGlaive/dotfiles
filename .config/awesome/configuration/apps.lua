@@ -1,7 +1,7 @@
 local fs = require("gears.filesystem")
 return {
     defualt = {
-        terminal = "st",
+        terminal = "kitty",
         editor = os.getenv("EDITOR") or "nano",
         rofi = "rofi -show drun"
     },

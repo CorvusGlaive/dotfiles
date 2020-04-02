@@ -43,7 +43,9 @@ awful.rules.rules = {
           "Nvidia-settings",
           "Pavucontrol",
           "Org.gnome.Nautilus",
-          "Gnome-system-monitor"
+          "Gnome-system-monitor",
+          "Xephyr",
+          "Gnome-calculator"
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
