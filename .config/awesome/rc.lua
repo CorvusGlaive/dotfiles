@@ -25,6 +25,7 @@ require("layout")
 require("module.notifications")
 require("module.auto-start")
 require("module.decorate-client")
+require("module.wallpaper")
 
 --Configurations
 require("configuration.client")
