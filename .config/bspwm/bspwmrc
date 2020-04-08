@@ -32,7 +32,7 @@ bspc rule -a Pavucontrol state=floating center=on
 
 
 #-------------
-feh --bg-fill ~/Pictures/402b4376b949f373100c0c204bc217c1.png &
+feh --bg-fill -z ~/Pictures &
 
 xrdb -load ~/.Xresources &
 
