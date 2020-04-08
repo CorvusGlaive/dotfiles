@@ -11,11 +11,16 @@ local themes_path = gfs.get_configuration_dir() .. "/themes/"
 
 local theme = {}
 
+theme.icons = require('themes.icons')
+
 theme.font          = "RobotoMedium 10"
 theme.title_font    = 'RobotoMedium 14'
 
-theme.bg_normal     = "#333333"
-theme.bg_focus      = "#408cdd"
+theme.background    = "#20202066"
+theme.transparent   = "#00000000"
+
+theme.bg_normal     = theme.background
+theme.bg_focus      = "#6498EF"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
@@ -30,7 +35,7 @@ theme.fg_minimize   = "#ffffff"
 theme.border_width  = dpi(2)
 theme.border_normal = "#33333387"
 -- theme.border_focus  = "#535d6c"
-theme.border_focus  = "#00ffc3"
+theme.border_focus  = "#ffffff"
 theme.border_marked = "#91231c"
 
 theme.wibar_bg = "#ff0000"
@@ -49,12 +54,12 @@ theme.wibar_bg = "#ff0000"
 -- Example:
 
 --Top panel-----------------------
-theme.top_panel_bg = "#22222299"
+theme.top_panel_bg = theme.background
 theme.top_panel_height = dpi(25)
 ----------------------------------
 
 --Tasklist-------------------------
-theme.tasklist_bg_normal = "#33333300"
+theme.tasklist_bg_normal = theme.transparent
 theme.tasklist_bg_focus = "#fff3"
 theme.tasklist_fg_focus = "#fff"
 ----------------------------------
@@ -62,8 +67,8 @@ theme.tasklist_fg_focus = "#fff"
 --TagList-------------------------
 theme.taglist_font = "Inter SemiBold 10"
 
-theme.taglist_bg_normal = "#00000000"
-theme.taglist_bg_focus = "#fccf050000"
+theme.taglist_bg_normal = theme.transparent
+theme.taglist_bg_focus = "#fccf0500"
 theme.taglist_bg_occupied = "#ff000000"
 
 theme.taglist_fg_focus = "#ffffff"
@@ -98,6 +103,7 @@ theme.taglist_underline_height = theme.top_panel_height - dpi(2)
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
+theme.notification_font = "Inter Semibold 11"
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
