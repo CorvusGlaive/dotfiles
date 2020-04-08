@@ -9,9 +9,9 @@ local cmd = require("scripts").audio
 local pulse_control = wibox.widget.textbox()
 -- pulse_control.font = "SymbolsNerdFont 10"
 local sink_icons = {
-    [1] = " ",
-    [2] = " ",
-    [3] = "蓼 ",
+    [1] = "",
+    [2] = "",
+    [3] = "蓼",
 }
 local vol_icons = {
     [1] =  " ", -- use first for volume-off state
