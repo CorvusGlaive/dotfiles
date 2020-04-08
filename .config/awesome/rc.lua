@@ -26,12 +26,13 @@ require("module.notifications")
 require("module.auto-start")
 require("module.decorate-client")
 require("module.wallpaper")
+require("module.exit-screen")
+require("module.volume-osd")
 
 --Configurations
 require("configuration.client")
 require("configuration.tags")
---Widgets
-require("widget.volume-osd")
+
 --Daemons
 require("module.audio-daemon")
 -- Set keys
