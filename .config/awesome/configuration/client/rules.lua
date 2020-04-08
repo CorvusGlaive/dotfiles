@@ -45,7 +45,8 @@ awful.rules.rules = {
           "Org.gnome.Nautilus",
           "Gnome-system-monitor",
           "Xephyr",
-          "Gnome-calculator"
+          "Gnome-calculator",
+          "Gcr-prompter"
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -61,7 +62,8 @@ awful.rules.rules = {
       properties = {
         floating = true,
         skip_decoration = true,
-        placement = awful.placement.centered
+        placement = awful.placement.centered,
+        shape = gears.shape.rounded_rect
       }
     },
     --Popups and Picture in pictures rules
@@ -94,10 +96,8 @@ awful.rules.rules = {
         placement = awful.placement.centered,
         ontop = true,
         floating = true,
-        shape = function()
-          return function(cr,w,h)
-            gears.shape.rounded_rect(cr, w, h, 8)
-          end
+        shape = function(cr,w,h)
+          gears.shape.rounded_rect(cr, w, h, 8)
         end,
         skip_decoration = true,
        }
@@ -114,10 +114,8 @@ awful.rules.rules = {
         properties = {
           skip_decoration = true,
           border_width = 0,
-          shape = function()
-            return function (cr,w,h)
-              gears.shape.rectangle(cr,w,h)
-            end
+          shape = function(cr,w,h)
+            gears.shape.rectangle(cr,w,h)
           end
       }
     }
