@@ -21,9 +21,53 @@ local LayoutBox = function(s)
         )
     )
     return wibox.widget {
+        widget = require("widget.clickable-container"),
+        {
+            widget = wibox.container.margin,
+            margins = dpi(4),
+            lb
+        }
+    }
+end
+
+local exit_button = wibox.widget {
+    widget = require("widget.clickable-container"),
+    {
         widget = wibox.container.margin,
-        margins = 4,
-        lb
+        margins = dpi(4),
+        {
+            widget = wibox.widget.imagebox,
+            image = require("themes.icons").logout,
+            resize = true,
+        }
+    },
+}
+
+exit_button:buttons(
+    gears.table.join(
+        awful.button(
+            {},
+            1,
+            nil,
+            function()
+                _G.exit_screen_show()
+            end
+        )
+    )
+)
+
+local function addClickableMargins(w,m)
+    m = (m == nil) and 7 or m
+    return wibox.widget {
+        widget = require("widget.clickable-container"),
+        {
+            widget = wibox.container.margin,
+            margins = {
+                left = dpi(m),
+                right = dpi(m)
+            },
+            w
+        }
     }
 end
 
@@ -42,27 +86,22 @@ local TopPanel = function(s)
     panel:setup {
         expand = "none",
         layout = wibox.layout.align.horizontal,
-        { -- Left widgets
+        {
             layout = wibox.layout.fixed.horizontal,
-            -- mylauncher,
             TagList(s),
             TaskList(s),
         },
-        require("widget.clock"),
-        -- {
-        --     layout = wibox.layout.flex.horizontal,
-        --     max_widget_size = dpi(750) ,
-        --     nil
-        -- }, -- Middle widget
-        { -- Right widgets
+        addClickableMargins(require("widget.clock")),
+        {
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(15),
             tray,
-            require("widget.audio"),
+            addClickableMargins(require("widget.audio")),
             require("widget.ram-meter"),
             require("widget.cpu-meter"),
             awful.widget.keyboardlayout(),
-            LayoutBox(s)
+            LayoutBox(s),
+            exit_button
         }
     }
     return panel

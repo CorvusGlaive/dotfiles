@@ -65,7 +65,7 @@ local function list_update(w, buttons, label, data, objects)
         l:add(tbm)
 
         -- And all of this gets a background
-        bgb:set_widget(l)
+        bgb:set_widget(require("widget.clickable-container")(l))
         l:buttons(create_buttons(buttons, o))
 
         -- Tooltip to display whole title, if it was truncated
@@ -161,8 +161,9 @@ local TaskList = function(s)
         awful.widget.tasklist.filter.currenttags,
         tasklist_buttons,
         {
-            -- spacing = 2
-            -- shape = gears.shape.rounded_bar
+          -- shape_border_width = 1,
+          -- shape_border_color = '#777777',
+          shape        = function(cr,w,h)gears.shape.rounded_rect(cr,w,h,4)end,
         },
         list_update,
         {
