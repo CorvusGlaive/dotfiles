@@ -32,7 +32,7 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 -- theme.useless_gap   = dpi(4)
-theme.border_width  = dpi(2)
+theme.border_width  = dpi(0)
 theme.border_normal = "#33333387"
 -- theme.border_focus  = "#535d6c"
 theme.border_focus  = "#ffffff"
@@ -119,6 +119,9 @@ theme.menu_width  = dpi(100)
 
 theme.titlebars_enabled = true
 theme.titlebar_size = dpi(32)
+theme.titlebar_bg_normal = "#3d3d3d"
+theme.titlebar_bg_focus = "#252525"
+theme.titlebar_fg_normal = "#c7c8cc"
 -- Define the image to load
 theme.titlebar_close_button_normal = themes_path.."titlebar/close_normal.png"
 theme.titlebar_close_button_focus  = themes_path.."titlebar/close_focus.png"
