@@ -50,12 +50,9 @@ local function list_update(w, buttons, label, data, objects)
         ib = wibox.widget.imagebox()
         tb = wibox.widget.textbox()
 
-        ib.forced_width = 15
-        ib.forced_height = 15
-
         bgb = wibox.container.background()
         tbm = wibox.container.margin(tb, dpi(4), dpi(4))
-        ibm = wibox.container.margin(ib, dpi(4), dpi(0), dpi(6), dpi(4))
+        ibm = wibox.container.margin(ib, dpi(4), dpi(4), dpi(4), dpi(4))
         l = wibox.layout.fixed.horizontal()
 
 
@@ -112,10 +109,8 @@ local function list_update(w, buttons, label, data, objects)
       end
       bgb:set_bgimage(bg_image)
       if icon then
-        ib.image = icon
+        ib.image = gears.surface(icon)
       else
-        ib.forced_height = 0
-        ib.forced_width = 0
         ibm:set_margins(0)
       end
 
@@ -145,7 +140,7 @@ local tasklist_buttons = gears.table.join(
                              c.kill(c)
                          end),
     awful.button({ }, 3, function()
-                             awful.menu.client_list({ theme = { width = 250 } })
+                             awful.menu.client_list({ theme = { width = 250, height = 20 } })
                          end),
     awful.button({ }, 4, function ()
                              awful.client.focus.byidx(1)
@@ -156,31 +151,72 @@ local tasklist_buttons = gears.table.join(
 )
 
 local TaskList = function(s)
-    return awful.widget.tasklist(
-        s,
-        awful.widget.tasklist.filter.currenttags,
-        tasklist_buttons,
+    -- return awful.widget.tasklist(
+    --     s,
+    --     awful.widget.tasklist.filter.currenttags,
+    --     tasklist_buttons,
+    --     {
+    --       -- shape_border_width = 1,
+    --       -- shape_border_color = '#777777',
+    --       shape        = function(cr,w,h)gears.shape.rounded_rect(cr,w,h,4)end,
+    --     },
+    --     list_update,
+    --     {
+    --         -- spacing = 10,
+    --         -- spacing_widget = {
+    --         --     {
+    --         --         forced_width = 5,
+    --         --         shape        = gears.shape.circle,
+    --         --         widget       = wibox.widget.separator
+    --         --     },
+    --         --     valign = 'center',
+    --         --     halign = 'center',
+    --         --     widget = wibox.container.place,
+    --         -- },
+    --         layout  = wibox.layout.fixed.horizontal
+    --     }
+    -- )
+    return awful.widget.tasklist {
+    screen   = s,
+    filter   = awful.widget.tasklist.filter.currenttags,
+    buttons  = tasklist_buttons,
+    -- layout   = {
+        -- spacing_widget = {
+        --     {
+        --         forced_width  = 5,
+        --         forced_height = 24,
+        --         thickness     = 1,
+        --         color         = '#777777',
+        --         widget        = wibox.widget.separator
+        --     },
+        --     valign = 'center',
+        --     halign = 'center',
+        --     widget = wibox.container.place,
+        -- },
+    --     spacing = 5,
+    --     layout  = wibox.layout.fixed.horizontal
+    -- },
+    -- -- Notice that there is *NO* wibox.wibox prefix, it is a template,
+    -- -- not a widget instance.
+    widget_template = {
+      -- wibox.widget.base.make_widget(),
+      widget = require("widget.clickable-container"),
+      {
+        id            = 'background_role',
+        widget        = wibox.container.background,
         {
-          -- shape_border_width = 1,
-          -- shape_border_color = '#777777',
-          shape        = function(cr,w,h)gears.shape.rounded_rect(cr,w,h,4)end,
+          widget  = wibox.container.margin,
+          margins = {
+            left = dpi(8),
+            right = dpi(8),
+            top = dpi(2),
+            bottom = dpi(2),
+          },
+          awful.widget.clienticon,
         },
-        list_update,
-        {
-            -- spacing = 10,
-            -- spacing_widget = {
-            --     {
-            --         forced_width = 5,
-            --         shape        = gears.shape.circle,
-            --         widget       = wibox.widget.separator
-            --     },
-            --     valign = 'center',
-            --     halign = 'center',
-            --     widget = wibox.container.place,
-            -- },
-            layout  = wibox.layout.fixed.horizontal
-        }
-    )
+      }
+    },
+}
 end
 
 
