@@ -158,12 +158,12 @@ configuration {
 }
 
 * {
-	background-color:            rgb(27, 18, 38);
-	text-color:                  #d3d7cf;
+	background-color:            rgba(37, 37, 37, 0.3);
+	text-color:                  #e2e2e2;
 	selbg:                       rgb(247, 179, 54);
-	actbg:                       rgb(36, 25, 51);
+	actbg:                       rgb(37, 37, 37);
 	urgbg:                       #e53935;
-	winbg:			     #e0a4f9;
+	winbg:			     #ffffff;
 
 	selected-normal-foreground:  @winbg;
 	normal-foreground:           @text-color;
@@ -187,7 +187,7 @@ configuration {
 	hide-scrollbar:              false;
 	margin:                      0px;
 	padding:                     0px;
-	font:            "Rubik medium 12";
+	font:            "Inter medium 12";
 }
 
 window {
@@ -199,6 +199,9 @@ window {
 	margin-right: 60px;
 	orientation: horizontal;
 	children:	 [mainbox];
+	border-radius: 10px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 0.4);
 }
 
 mainbox {
@@ -234,20 +237,27 @@ listview {
 
 element { 
 	padding: 16px;
-	border:  0 0 0 5px solid;
+	border: 1px 0 1px 0 solid;
+	border-color: transparent;
+}
+
+element-icon {
+	size: 18px;
 }
 
 entry {
 	expand:         true;
-	text-color:     @normal-foreground;
-	background-color: rgb(21, 13, 30);
+	text-color:     #ffffff;
+	background-color: rgba(21, 13, 30,0);
+	border: 0 0 1px 0 solid;
+	border-color: rgba(255, 255, 255, 0.1);
 	vertical-align: 1;
 	padding:        12px;
-	font:            "Rubik medium 14";
+	font:            "Inter medium 14";
 }
 
 element normal.normal {
-	background-color: @normal-background;
+	background-color: transparent;
 	text-color:       @normal-foreground;
 }
 
@@ -264,9 +274,8 @@ element normal.active {
 element selected.normal {
 	background-color: @selected-normal-background;
 	text-color:       @selected-normal-foreground;
-	padding: 16px;
-	border:           0 0 0 5px solid;
-	border-color:	    @active-background;
+	border: 1px 0 1px 0 solid;
+	border-color: rgba(255,255,255,0.05);
 }
 
 element selected.urgent {
@@ -280,7 +289,7 @@ element selected.active {
 }
 
 element alternate.normal {
-	background-color: @normal-background;
+	background-color: transparent;
 	text-color:       @normal-foreground;
 }
 
