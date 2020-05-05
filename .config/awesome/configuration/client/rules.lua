@@ -18,7 +18,10 @@ awful.rules.rules = {
         keys = client_keys,
         buttons = client_buttons,
         screen = awful.screen.preferred,
-        placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+        placement = awful.placement.centered,
+        shape = function(cr,w,h)
+          gears.shape.rounded_rect(cr, w, h, 8)
+        end
      },
     },
     -- Floating clients.
@@ -90,9 +93,23 @@ awful.rules.rules = {
       }
     },
     -- Add titlebars to normal clients and dialogs
+    {
+      rule_any = {type = {"normal", "dialog"}},
+      except_any = {
+        instance = {
+          "gnome-",
+          "org.gnome.",
+          "code - insiders",
+          "vivaldi-snapshot",
+          "lollypop",
+          "chromium",
+          "eog"
+        }
+      },
+      properties = {titlebars_enabled = true}
+    },
     { rule_any = {type = { "dialog" }},
       properties = {
-        titlebars_enabled = false,
         placement = awful.placement.centered,
         ontop = true,
         floating = true,
@@ -118,6 +135,18 @@ awful.rules.rules = {
             gears.shape.rectangle(cr,w,h)
           end
       }
+    },
+    {
+      rule_any = {
+        maximized = {true},
+      },
+      properties = {
+        y = 0
+      },
+      callback = function (c)
+        if c.instance == 'vlc' then c.shape = gears.shape.rectangle end
+        c.height = c.screen.geometry.height - beautiful.top_panel_height
+      end
     }
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
