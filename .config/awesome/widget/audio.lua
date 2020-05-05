@@ -19,7 +19,7 @@ local vol_icons = {
     [3] =  "墳 ",
     [4] =  " "
 }
-local curDevice_icon = ' ' --Defualt sink icon if there are no matched devices
+local curDevice_icon = ' ' --Default sink icon if there are no matched devices
 
 
 local function getCurDeviceIcon(name)

@@ -5,9 +5,9 @@ local hotkeys_popup = require('awful.hotkeys_popup').widget
 local gears = require("gears")
 local modkey = require('configuration.keys.mod').modKey
 local altkey = require('configuration.keys.mod').altKey
-local terminal = require("configuration.apps").defualt.terminal
+local terminal = require("configuration.apps").default.terminal
 local audio = require('scripts').audio
-local rofi = require('configuration.apps').defualt.rofi
+local rofi = require('configuration.apps').default.rofi
 
 
 local menubar = require("menubar")
@@ -19,6 +19,10 @@ local globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+              {description = "view next", group = "tag"}),
+    awful.key({ modkey,           }, "q",   awful.tag.viewprev,
+              {description = "view previous", group = "tag"}),
+    awful.key({ modkey,           }, "e",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),

@@ -80,8 +80,8 @@ ruled.notification.connect_signal('request::rules', function()
 	ruled.notification.append_rule {
 		rule       = { urgency = 'critical' },
 		properties = { 
-			font        		= 'Inter Bold 10',
-			bg 					= '#ff0000', 
+			font        		= 'Inter 10',
+			bg 					= '#cc3f3d', 
 			fg 					= '#ffffff',
 			margin 				= dpi(16),
 			position 			= 'top_right',
@@ -204,13 +204,13 @@ naughty.connect_signal("request::display", function(n)
                     }
                   },
                   {
-                    spacing = 2,
-                    layout  = wibox.layout.fixed.vertical,
-                    title,
+                    widget = wibox.container.constraint,
+                    strategy = "exact",
+                    width = dpi(280),
                     {
-                      widget = wibox.container.constraint,
-                      strategy = "exact",
-                      width = dpi(280),
+                      spacing = 2,
+                      layout  = wibox.layout.fixed.vertical,
+                      title,
                       naughty.widget.message,
                     },
                   },

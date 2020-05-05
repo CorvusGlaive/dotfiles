@@ -43,7 +43,7 @@ _G.root.keys(require("configuration.keys.global"))
 
 
 -- Menubar configuration
-menubar.utils.terminal = require("configuration.apps").defualt.terminal -- Set the terminal for applications that require it
+menubar.utils.terminal = require("configuration.apps").default.terminal -- Set the terminal for applications that require it
 -- }}}
 
 

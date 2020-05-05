@@ -38,7 +38,12 @@ local TagList = function(s)
                 {
                     layout = wibox.layout.stack,
                     {
-                        margins = 4,
+                        margins = {
+                            left = dpi(8),
+                            right = dpi(8),
+                            top = dpi(2),
+                            bottom = dpi(2),
+                        },
                         widget = wibox.container.margin,
                         {
                             id = 'text_role',
