@@ -73,7 +73,7 @@ end
 
 local TopPanel = function(s)
     -- Create the wibox
-    local panel = awful.wibar({ position = "top", screen = s, height = b.top_panel_height, bg = b.top_panel_bg })
+    local panel = awful.wibar({ position = "bottom", screen = s, height = b.top_panel_height, bg = b.top_panel_bg })
     local tray = wibox.widget{
         wibox.widget.systray(),
         top = dpi(4),
@@ -88,10 +88,10 @@ local TopPanel = function(s)
         layout = wibox.layout.align.horizontal,
         {
             layout = wibox.layout.fixed.horizontal,
+            require("widget.app-launcher"),
             TagList(s),
-            TaskList(s),
         },
-        addClickableMargins(require("widget.clock")),
+        TaskList(s),
         {
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(15),
@@ -99,8 +99,9 @@ local TopPanel = function(s)
             addClickableMargins(require("widget.audio")),
             require("widget.ram-meter"),
             require("widget.cpu-meter"),
-            awful.widget.keyboardlayout(),
+            addClickableMargins(awful.widget.keyboardlayout(),4),
             LayoutBox(s),
+            addClickableMargins(require("widget.clock")),
             exit_button
         }
     }

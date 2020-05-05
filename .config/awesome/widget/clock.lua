@@ -34,12 +34,12 @@ local month_calendar = awful.widget.calendar_popup.month {
         border_width = 0,
         markup = function(t) return t end,
         shape = function(cr,w,h)
-              gears.shape.rounded_rect(cr, w, h, dpi(4))
-          end,
+            gears.shape.rounded_rect(cr, w, h, dpi(4))
+        end,
         padding = dpi(3)
     },
 }
-month_calendar:attach( mytextclock, "tc")
+month_calendar:attach( mytextclock, "br")
 
 
 return mytextclock
