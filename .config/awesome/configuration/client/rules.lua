@@ -144,7 +144,7 @@ awful.rules.rules = {
         y = 0
       },
       callback = function (c)
-        if c.instance == 'vlc' then c.shape = gears.shape.rectangle end
+        c.shape = gears.shape.rectangle
         c.height = c.screen.geometry.height - beautiful.top_panel_height
       end
     }
@@ -154,3 +154,14 @@ awful.rules.rules = {
     --   properties = { screen = 1, tag = "2" } },
 }
 -- }}}
+local function handleCorners(client)
+  if client.maximized or client.fullscreen then
+    client.shape = gears.shape.rectangle
+  else
+    client.shape = function (cr, w, h)
+        gears.shape.rounded_rect(cr, w, h, 8)
+    end
+  end
+end
+_G.client.connect_signal('property::maximized', handleCorners)
+_G.client.connect_signal('property::fullscreen', handleCorners)
