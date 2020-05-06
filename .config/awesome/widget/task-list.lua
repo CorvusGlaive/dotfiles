@@ -180,22 +180,9 @@ local TaskList = function(s)
     screen   = s,
     filter   = awful.widget.tasklist.filter.currenttags,
     buttons  = tasklist_buttons,
-    -- layout   = {
-        -- spacing_widget = {
-        --     {
-        --         forced_width  = 5,
-        --         forced_height = 24,
-        --         thickness     = 1,
-        --         color         = '#777777',
-        --         widget        = wibox.widget.separator
-        --     },
-        --     valign = 'center',
-        --     halign = 'center',
-        --     widget = wibox.container.place,
-        -- },
-    --     spacing = 5,
-    --     layout  = wibox.layout.fixed.horizontal
-    -- },
+    layout   = {
+        layout  = wibox.layout.fixed.horizontal
+    },
     -- -- Notice that there is *NO* wibox.wibox prefix, it is a template,
     -- -- not a widget instance.
     widget_template = {
@@ -212,9 +199,17 @@ local TaskList = function(s)
             top = dpi(2),
             bottom = dpi(2),
           },
-          awful.widget.clienticon,
+          {
+            id = 'icon_role',
+            widget = wibox.widget.imagebox
+          },
         },
-      }
+      },
+      create_callback = function (self,client)
+        local icon_widget = self:get_children_by_id('icon_role')[1]
+        if client.icon then icon_widget.image = client.icon
+        else icon_widget.image = require('themes.icons').app_icon end
+      end
     },
 }
 end
