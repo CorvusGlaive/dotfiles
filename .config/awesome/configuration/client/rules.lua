@@ -69,29 +69,6 @@ awful.rules.rules = {
         shape = gears.shape.rounded_rect
       }
     },
-    --Popups and Picture in pictures rules
-    {
-      rule_any = {
-        instance = {
-          "Toolkit"
-        },
-        name = {
-          "Picture in picture",
-          "Picture-in-Picture",
-          "Picture-in-picture",
-        },
-        role = {
-          "pop-up",
-          "PictureInPicture"
-        }
-      },
-      properties = {
-        floating = true,
-        skip_decoration = true,
-        ontop = true,
-        sticky = true
-      }
-    },
     -- Add titlebars to normal clients and dialogs
     {
       rule_any = {type = {"normal", "dialog"}},
@@ -108,6 +85,43 @@ awful.rules.rules = {
       },
       properties = {titlebars_enabled = true}
     },
+    -- Popups and Picture in pictures rules
+    {
+      rule_any = {
+        instance = {
+          "Toolkit"
+        },
+        name = {
+          "Picture in picture",
+          "Picture-in-Picture",
+          "Picture-in-picture",
+        },
+        role = {
+          "pop-up",
+          "PictureInPicture"
+        }
+      },
+      properties = {
+        titlebars_enabled = false,
+        floating = true,
+        skip_decoration = true,
+        ontop = true,
+        sticky = true,
+        shape = function (cr,w,h)
+            gears.shape.rounded_rect(cr,w,h,8)
+        end
+      },
+      -- Setting position and size for picture-in-picture clients
+      callback = function (c)
+        if c.instance == "Toolkit" then
+          c.width = c.width - (c.width * 0.35)
+          c.height = c.height - (c.height * 0.35)
+        end
+        c.x = c.screen.geometry.width - c.width - dpi(7)
+        c.y = c.screen.geometry.height - c.height - dpi(30)
+      end
+    },
+    -- Dialog clients
     { rule_any = {type = { "dialog" }},
       properties = {
         placement = awful.placement.centered,
@@ -128,14 +142,25 @@ awful.rules.rules = {
           "toolbar"
         },
       },
-        properties = {
-          skip_decoration = true,
-          border_width = 0,
-          shape = function(cr,w,h)
-            gears.shape.rectangle(cr,w,h)
-          end
-      }
+      except_any = {
+        instance = {'Toolkit'}
+      },
+      properties = {
+        skip_decoration = true,
+        border_width = 0,
+        shape = function(cr,w,h)
+          gears.shape.rectangle(cr,w,h)
+        end
+      },
+      callback = function (c)
+        if c.instance ~= 'vlc' then return end
+        c.y = c.screen.geometry.height - c.height
+        c.shape = function (cr, w, h)
+          gears.shape.partially_rounded_rect(cr, w, h, true, true, false, false, 5)
+        end
+      end
     },
+    -- Maximized clients
     {
       rule_any = {
         maximized = {true},
