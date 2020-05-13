@@ -118,7 +118,7 @@ theme.menu_width  = dpi(100)
 --theme.bg_widget = "#cc0000"
 
 theme.titlebars_enabled = true
-theme.titlebar_size = dpi(32)
+theme.titlebar_size = dpi(24)
 theme.titlebar_bg_normal = "#3d3d3d"
 theme.titlebar_bg_focus = "#252525"
 theme.titlebar_fg_normal = "#c7c8cc"
