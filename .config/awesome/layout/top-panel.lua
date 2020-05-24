@@ -104,7 +104,8 @@ end
 
 local TopPanel = function(s)
     -- Create the wibox
-    local panel = awful.wibar({ position = "bottom", screen = s, height = b.top_panel_height, bg = b.top_panel_bg })
+    local panel = awful.wibar({ position = "bottom", screen = s, height = b.top_panel_height, bg = b.top_panel_bg,
+    bgimage = b.noise() })
     local tray = wibox.widget{
         wibox.widget.systray(),
         top = dpi(4),
