@@ -1,6 +1,7 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
+local btl = require("beautiful")
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 _G.client.connect_signal("request::titlebars", function(c)
@@ -18,8 +19,15 @@ _G.client.connect_signal("request::titlebars", function(c)
     }
     if c.class == "kitty" then
         args = {
-            bg_normal = "#00000066",
-            bg_focus = "#00000066"
+            bg_normal = "#101010" .. btl.opacityHex(0.5),
+            bg_focus = "#101010" .. btl.opacityHex(0.5),
+            bgimage = btl.noise()
+        }
+    end
+    if c.class == "Alacritty" then
+        args = {
+            bg_normal = "#101010" .. btl.opacityHex(0.6),
+            bg_focus = "#101010" .. btl.opacityHex(0.6),
         }
     end
     awful.titlebar(c,args) : setup {
