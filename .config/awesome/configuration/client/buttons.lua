@@ -1,18 +1,22 @@
 local awful = require('awful')
-local gears = require("gears")
+local ruled = require("ruled")
 local modkey = require('configuration.keys.mod').modKey
 
-local clientButtons = gears.table.join(
+local clientButtons = {
     awful.button({ }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
+        c:activate { context = "mouse_click" }
     end),
     awful.button({ modkey }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.move(c)
+        c:activate { context = "mouse_click", action = "mouse_move"  }
+    end),
+    awful.button({  }, 3, function (c)
+        if c.isPopup then
+            c:activate { context = "mouse_click", action = "mouse_move"  }
+            return
+        end
     end),
     awful.button({ modkey }, 3, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.resize(c)
-    end)
-)
+        c:activate { context = "mouse_click", action = "mouse_resize"}
+    end),
+}
 return clientButtons

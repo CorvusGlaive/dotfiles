@@ -9,9 +9,9 @@ local cmd = require("scripts").audio
 local pulse_control = wibox.widget.textbox()
 -- pulse_control.font = "SymbolsNerdFont 10"
 local sink_icons = {
-    [1] = " ",
-    [2] = " ",
-    [3] = "蓼 ",
+    [1] = "",
+    [2] = "",
+    [3] = "蓼",
 }
 local vol_icons = {
     [1] =  " ", -- use first for volume-off state
@@ -19,7 +19,7 @@ local vol_icons = {
     [3] =  "墳 ",
     [4] =  " "
 }
-local curDevice_icon = ' ' --Defualt sink icon if there are no matched devices
+local curDevice_icon = ' ' --Default sink icon if there are no matched devices
 
 
 local function getCurDeviceIcon(name)

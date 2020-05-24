@@ -5,20 +5,41 @@ local hotkeys_popup = require('awful.hotkeys_popup').widget
 local gears = require("gears")
 local modkey = require('configuration.keys.mod').modKey
 local altkey = require('configuration.keys.mod').altKey
-local terminal = require("configuration.apps").defualt.terminal
+local terminal = require("configuration.apps").default.terminal
 local audio = require('scripts').audio
-local rofi = require('configuration.apps').defualt.rofi
+local rofi = require('configuration.apps').default.rofi
 
 
 local menubar = require("menubar")
 
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
+    awful.key({ modkey,           }, "z",   function() 
+        require('naughty').notification {
+            icon='/home/fun/.config/awesome/icons/awesome32.png',
+            app_name = 'System notification',
+            title = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+            message = 'El snort gentleman got milk jimi hendrix off-piste'.. 
+            'sweat irrigator,, decathlon champion off-piste old west sheriff jimi hendrix'..
+            ' sweat irrigator, gentleman got milk el snort landed gentry id?',
+            actions = {
+                require('naughty').action {name='Apply'},
+                require('naughty').action {name='Reject'},
+                require('naughty').action {name='Settings'},
+            },
+            urgency = 'critical',
+        }
+    end,
+              {description="test notification", group="awesome"}),
     awful.key({ modkey,           }, "F1",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+              {description = "view next", group = "tag"}),
+    awful.key({ modkey,           }, "q",   awful.tag.viewprev,
+              {description = "view previous", group = "tag"}),
+    awful.key({ modkey,           }, "e",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),

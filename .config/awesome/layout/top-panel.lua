@@ -22,47 +22,116 @@ local LayoutBox = function(s)
     )
     return wibox.widget {
         widget = wibox.container.margin,
-        margins = 4,
+        margins = dpi(4),
         lb
+    }
+end
+
+local exit_button = wibox.widget {
+    widget = wibox.container.margin,
+    margins = dpi(4),
+    {
+        widget = wibox.widget.imagebox,
+        image = require("themes.icons").logout,
+        resize = true,
+    }
+}
+local showDesktop_button = wibox.widget {
+    widget = require('widget.clickable-container'),
+    {
+        layout = wibox.layout.fixed.horizontal,
+        {
+            widget = wibox.container.background,
+            bg = '#ffffff'..b.opacityHex(0.2),
+            forced_width = dpi(1),
+            wibox.widget.base.make_widget()
+        },
+        {
+            widget = wibox.container.background,
+            forced_width = dpi(7),
+            wibox.widget.base.make_widget()
+        }
+    }
+}
+showDesktop_button:connect_signal('mouse::enter',function()
+    for i,c in pairs(_G.screen[_G.mouse.screen].selected_tag:clients()) do
+        c.opacity = 0
+    end
+end)
+showDesktop_button:connect_signal('mouse::leave',function()
+    for i,c in pairs(_G.screen[_G.mouse.screen].selected_tag:clients()) do
+        c.opacity = 1
+    end
+end)
+showDesktop_button:connect_signal('button::press',function()
+    for i,c in pairs(_G.screen[_G.mouse.screen].selected_tag:clients()) do
+        c.minimized = not c.minimized
+    end
+end)
+
+exit_button:buttons(
+    gears.table.join(
+        awful.button(
+            {},
+            1,
+            nil,
+            function()
+                _G.exit_screen_show()
+            end
+        )
+    )
+)
+
+local function addClickableMargins(widget,margins,isClickable)
+    isClickable = (isClickable == nil) and true or isClickable
+    margins = (margins == nil) and 7 or margins
+    return wibox.widget {
+        widget = isClickable and require("widget.clickable-container") or wibox.container.background,
+        {
+            widget = wibox.container.margin,
+            margins = {
+                left = dpi(margins),
+                right = dpi(margins)
+            },
+            widget
+        }
     }
 end
 
 local TopPanel = function(s)
     -- Create the wibox
-    local panel = awful.wibar({ position = "top", screen = s, height = b.top_panel_height, bg = b.top_panel_bg })
+    local panel = awful.wibar({ position = "bottom", screen = s, height = b.top_panel_height, bg = b.top_panel_bg,
+    bgimage = b.noise() })
     local tray = wibox.widget{
         wibox.widget.systray(),
         top = dpi(4),
         bottom = dpi(4),
         widget = wibox.container.margin
     }
-    
+
 
     -- Add widgets to the wibox
     panel:setup {
         expand = "none",
         layout = wibox.layout.align.horizontal,
-        { -- Left widgets
+        {
             layout = wibox.layout.fixed.horizontal,
-            -- mylauncher,
+            require("widget.app-launcher"),
             TagList(s),
-            TaskList(s),
         },
-        require("widget.clock"),
-        -- {
-        --     layout = wibox.layout.flex.horizontal,
-        --     max_widget_size = dpi(750) ,
-        --     nil
-        -- }, -- Middle widget
-        { -- Right widgets
+        TaskList(s),
+        {
             layout = wibox.layout.fixed.horizontal,
-            spacing = dpi(15),
+            spacing = dpi(1),
             tray,
-            require("widget.audio"),
-            require("widget.ram-meter"),
-            require("widget.cpu-meter"),
-            awful.widget.keyboardlayout(),
-            LayoutBox(s)
+            addClickableMargins(require("widget.audio")),
+            addClickableMargins(require("widget.ram-meter"),nil,false),
+            addClickableMargins(require("widget.cpu-meter"),nil,false),
+            addClickableMargins(awful.widget.keyboardlayout(),4),
+            addClickableMargins(LayoutBox(s),4),
+            addClickableMargins(require("widget.clock"),10),
+            addClickableMargins(exit_button,4),
+            showDesktop_button
         }
     }
     return panel
