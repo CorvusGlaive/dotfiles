@@ -21,25 +21,20 @@ local LayoutBox = function(s)
         )
     )
     return wibox.widget {
-        widget = require("widget.clickable-container"),
-        {
-            widget = wibox.container.margin,
-            margins = dpi(4),
-            lb
-        }
+        widget = wibox.container.margin,
+        margins = dpi(4),
+        lb
     }
 end
 
 local exit_button = wibox.widget {
-    widget = require("widget.clickable-container"),
+    widget = wibox.container.margin,
+    margins = dpi(4),
     {
-        widget = wibox.container.margin,
-        margins = dpi(4),
-        {
-            widget = wibox.widget.imagebox,
-            image = require("themes.icons").logout,
-            resize = true,
-        }
+        widget = wibox.widget.imagebox,
+        image = require("themes.icons").logout,
+        resize = true,
+    }
 }
 local showDesktop_button = wibox.widget {
     widget = require('widget.clickable-container'),
@@ -87,17 +82,18 @@ exit_button:buttons(
     )
 )
 
-local function addClickableMargins(w,m)
-    m = (m == nil) and 7 or m
+local function addClickableMargins(widget,margins,isClickable)
+    isClickable = (isClickable == nil) and true or isClickable
+    margins = (margins == nil) and 7 or margins
     return wibox.widget {
-        widget = require("widget.clickable-container"),
+        widget = isClickable and require("widget.clickable-container") or wibox.container.background,
         {
             widget = wibox.container.margin,
             margins = {
-                left = dpi(m),
-                right = dpi(m)
+                left = dpi(margins),
+                right = dpi(margins)
             },
-            w
+            widget
         }
     }
 end
@@ -112,7 +108,7 @@ local TopPanel = function(s)
         bottom = dpi(4),
         widget = wibox.container.margin
     }
-    
+
 
     -- Add widgets to the wibox
     panel:setup {
@@ -126,15 +122,16 @@ local TopPanel = function(s)
         TaskList(s),
         {
             layout = wibox.layout.fixed.horizontal,
-            spacing = dpi(15),
+            spacing = dpi(1),
             tray,
             addClickableMargins(require("widget.audio")),
-            require("widget.ram-meter"),
-            require("widget.cpu-meter"),
+            addClickableMargins(require("widget.ram-meter"),nil,false),
+            addClickableMargins(require("widget.cpu-meter"),nil,false),
             addClickableMargins(awful.widget.keyboardlayout(),4),
-            LayoutBox(s),
-            addClickableMargins(require("widget.clock")),
-            exit_button
+            addClickableMargins(LayoutBox(s),4),
+            addClickableMargins(require("widget.clock"),10),
+            addClickableMargins(exit_button,4),
+            showDesktop_button
         }
     }
     return panel
