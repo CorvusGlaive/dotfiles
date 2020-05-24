@@ -37,7 +37,8 @@ ruled.client.connect_signal('request::rules', function ()
         "vivaldi-snapshot",
         "lollypop",
         "chromium",
-        "eog"
+        "eog",
+        "gedit"
       }
     },
     properties = {titlebars_enabled = true}

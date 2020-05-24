@@ -1,7 +1,7 @@
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 
-local function build(widget)
+local function build(widget,color_focus,color_normal)
 	local container = wibox.widget {
 		widget,
 		widget = wibox.container.background
@@ -11,7 +11,7 @@ local function build(widget)
 	container:connect_signal(
 		'mouse::enter',
 		function()
-			container.bg = "#ffffff10"
+			container.bg = color_focus or "#ffffff10"
 			-- Hm, no idea how to get the wibox from this signal's arguments...
 			local w = _G.mouse.current_wibox
 			if w then
@@ -24,7 +24,7 @@ local function build(widget)
 	container:connect_signal(
 		'mouse::leave',
 		function()
-			container.bg = "00000000"
+			container.bg = color_normal or "00000000"
 			if old_wibox then
 				old_wibox.cursor = old_cursor
 				old_wibox = nil
