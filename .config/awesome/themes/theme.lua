@@ -4,6 +4,7 @@
 
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
+local gears = require("gears")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
@@ -13,10 +14,34 @@ local theme = {}
 
 theme.icons = require('themes.icons')
 
+theme.colors = {
+    black = "#202020"
+}
+
+theme.opacityHex = function(opacity) return string.format('%x', math.floor(255*opacity)) end
+theme.noise = function(opacity,scale,operator)
+    opacity = opacity or 0.4
+    scale = scale or 1
+    operator = operator or 'SOFT_LIGHT'
+    return function(ctx,cr,w,h)
+        local g = gears.surface('/home/fun/Downloads/n3.png') -- Rectangle2 or n3
+        cr:set_source_surface(g,0,0)
+        local pat = cr:get_source()
+        local m = pat:get_matrix()
+        m:init_scale(scale,scale)
+        pat:set_matrix(m)
+        pat:set_extend('REPEAT')
+        -- pat:set_filter('NEAREST')
+        cr:set_operator(operator)
+        -- cr:paint()
+        cr:paint_with_alpha(opacity)
+    end
+end
+
 theme.font          = "RobotoMedium 10"
 theme.title_font    = 'RobotoMedium 14'
 
-theme.background    = "#20202066"
+theme.background    = theme.colors.black .. theme.opacityHex(0.6)
 theme.transparent   = "#00000000"
 
 theme.bg_normal     = theme.background
