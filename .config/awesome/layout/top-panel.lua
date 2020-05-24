@@ -40,8 +40,39 @@ local exit_button = wibox.widget {
             image = require("themes.icons").logout,
             resize = true,
         }
-    },
 }
+local showDesktop_button = wibox.widget {
+    widget = require('widget.clickable-container'),
+    {
+        layout = wibox.layout.fixed.horizontal,
+        {
+            widget = wibox.container.background,
+            bg = '#ffffff'..b.opacityHex(0.2),
+            forced_width = dpi(1),
+            wibox.widget.base.make_widget()
+        },
+        {
+            widget = wibox.container.background,
+            forced_width = dpi(7),
+            wibox.widget.base.make_widget()
+        }
+    }
+}
+showDesktop_button:connect_signal('mouse::enter',function()
+    for i,c in pairs(_G.screen[_G.mouse.screen].selected_tag:clients()) do
+        c.opacity = 0
+    end
+end)
+showDesktop_button:connect_signal('mouse::leave',function()
+    for i,c in pairs(_G.screen[_G.mouse.screen].selected_tag:clients()) do
+        c.opacity = 1
+    end
+end)
+showDesktop_button:connect_signal('button::press',function()
+    for i,c in pairs(_G.screen[_G.mouse.screen].selected_tag:clients()) do
+        c.minimized = not c.minimized
+    end
+end)
 
 exit_button:buttons(
     gears.table.join(
