@@ -14,6 +14,23 @@ local menubar = require("menubar")
 
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
+    awful.key({ modkey,           }, "z",   function() 
+        require('naughty').notification {
+            icon='/home/fun/.config/awesome/icons/awesome32.png',
+            app_name = 'System notification',
+            title = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+            message = 'El snort gentleman got milk jimi hendrix off-piste'.. 
+            'sweat irrigator,, decathlon champion off-piste old west sheriff jimi hendrix'..
+            ' sweat irrigator, gentleman got milk el snort landed gentry id?',
+            actions = {
+                require('naughty').action {name='Apply'},
+                require('naughty').action {name='Reject'},
+                require('naughty').action {name='Settings'},
+            },
+            urgency = 'critical',
+        }
+    end,
+              {description="test notification", group="awesome"}),
     awful.key({ modkey,           }, "F1",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
