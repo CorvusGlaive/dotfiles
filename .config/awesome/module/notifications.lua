@@ -1,5 +1,5 @@
 local naughty = require('naughty')
-local beautiful = require('beautiful')
+local btl = require('beautiful')
 local gears = require('gears')
 local awful = require('awful')
 local ruled = require('ruled')
@@ -18,6 +18,9 @@ naughty.config.defaults.font = 'Inter 10'
 naughty.config.defaults.icon = nil
 naughty.config.defaults.icon_size = dpi(32)
 naughty.config.defaults.shape = gears.shape.rounded_rect
+naughty.config.defaults.bg = btl.background
+-- naughty.config.defaults.bg = btl.colors.black .. btl.opacityHex(0.3)
+naughty.config.defaults.fg = btl.fg_normal
 naughty.config.defaults.border_width = 1
 naughty.config.defaults.border_color = "#6b6b6b"
 naughty.config.defaults.hover_timeout = nil
@@ -52,7 +55,7 @@ local function new(args)
   args = args or {}
   local tb = textbox()
   tb:set_wrap("word")
-  tb:set_font(beautiful.notification_font)
+  tb:set_font(btl.notification_font)
 
   gtable.crush(tb, title, true)
 
@@ -75,16 +78,12 @@ end
 title = setmetatable(title, {__call = function(_, ...) return new(...) end})
 
 ruled.notification.connect_signal('request::rules', function()
-	
+
 	-- Critical notifs
 	ruled.notification.append_rule {
 		rule       = { urgency = 'critical' },
-		properties = { 
-			font        		= 'Inter 10',
-			bg 					= '#cc3f3d', 
-			fg 					= '#ffffff',
-			margin 				= dpi(16),
-			position 			= 'top_right',
+		properties = {
+      app_name_bg = '#ffffff'..btl.opacityHex(0.3),
 			timeout 			= 0,
       implicit_timeout	= 0,
 		}
@@ -94,10 +93,6 @@ ruled.notification.connect_signal('request::rules', function()
 	ruled.notification.append_rule {
 		rule       = { urgency = 'normal' },
 		properties = {
-			bg      			= beautiful.background, 
-			fg 					= beautiful.fg_normal,
-			margin 				= dpi(16),
-			position 			= 'top_right',
 			timeout 			= 0,
 			implicit_timeout 	= 0
 		}
@@ -106,11 +101,7 @@ ruled.notification.connect_signal('request::rules', function()
 	-- Low notifs
 	ruled.notification.append_rule {
 		rule       = { urgency = 'low' },
-		properties = { 
-			bg     				= beautiful.background,
-			fg 					= beautiful.fg_normal,
-			margin 				= dpi(16),
-			position 			= 'top_right',
+		properties = {
 			timeout 			= 5,
 			implicit_timeout	= 5
 		}
@@ -120,11 +111,13 @@ end)
 -- Error handling
 naughty.connect_signal("request::display_error", function(message, startup)
   naughty.notification {
-      urgency = "critical",
+      -- urgency = "critical",
       title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
       message = message,
       app_name = 'System Notification',
-      icon = beautiful.awesome_icon
+      icon = btl.awesome_icon,
+      bg = '#cc3f3d',
+      app_name_bg = '#000000'..btl.opacityHex(0.3)
   }
 end)
 
@@ -165,57 +158,57 @@ naughty.connect_signal("request::display", function(n)
         layout = wibox.layout.fixed.vertical,
         {
           widget = wibox.container.background,
-          bg = '#0000004d',
+          bg = n.app_name_bg or ("#000000"..btl.opacityHex(0.3)),
           {
-            widget = wibox.container.place,
-            halign = 'center',
-            {
-              widget = wibox.widget.textbox,
-              text = n.app_name,
-              font = 'Inter Semibold 10'
-            }
+            widget = wibox.widget.textbox,
+            text = n.app_name,
+            align='center',
+            font = 'Inter Semibold 10'
           }
         },
         {
-
-          widget = wibox.container.margin,
-          margins = 10,
+          widget = wibox.container.background,
+          bgimage = btl.noise(),
           {
-            strategy = "max",
-            width = beautiful.notification_max_width or dpi(400),
-            widget = wibox.container.constraint,
+            widget = wibox.container.margin,
+            margins = 10,
             {
-              strategy = "min",
-              width = dpi(350),
+              strategy = "max",
+              width = btl.notification_max_width or dpi(400),
               widget = wibox.container.constraint,
               {
-                spacing = 0,
-                layout = wibox.layout.fixed.horizontal,
+                strategy = "min",
+                width = dpi(350),
+                widget = wibox.container.constraint,
                 {
-                  fill_space = true,
-                  spacing    = 10,
-                  layout     = wibox.layout.fixed.horizontal,
+                  spacing = 0,
+                  layout = wibox.layout.fixed.horizontal,
                   {
-                    widget = wibox.container.place,
-                    valign = 'center',
+                    fill_space = true,
+                    spacing    = 10,
+                    layout     = wibox.layout.fixed.horizontal,
                     {
-                      widget = naughty.widget.icon,
-                      resize_strategy = 'scale'
-                    }
-                  },
-                  {
-                    widget = wibox.container.constraint,
-                    strategy = "exact",
-                    width = dpi(280),
+                      widget = wibox.container.place,
+                      valign = 'center',
+                      {
+                        widget = naughty.widget.icon,
+                        resize_strategy = 'scale'
+                      }
+                    },
                     {
-                      spacing = 2,
-                      layout  = wibox.layout.fixed.vertical,
-                      title,
-                      naughty.widget.message,
+                      widget = wibox.container.constraint,
+                      strategy = "exact",
+                      width = dpi(280),
+                      {
+                        spacing = 2,
+                        layout  = wibox.layout.fixed.vertical,
+                        title,
+                        naughty.widget.message,
+                      },
                     },
                   },
-                },
-                action_list,
+                  action_list,
+                }
               }
             }
           }
