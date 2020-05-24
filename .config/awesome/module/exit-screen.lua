@@ -6,32 +6,9 @@ local beautiful = require('beautiful')
 local dpi = require('beautiful').xresources.apply_dpi
 
 local icons = require('themes.icons')
-local apps = require('configuration.apps')
 
 -- Appearance
 local icon_size = beautiful.exit_screen_icon_size or dpi(90)
-
-local user_name = wibox.widget {
-	markup = 'Choose wisely, $USER!',
-	font = 'SF Pro Text UltraLight 48',
-	align = 'center',
-	valign = 'center',
-	widget = wibox.widget.textbox
-}
-
-awful.spawn.easy_async_with_shell("whoami", function(stdout) 
-	if stdout then
-		-- Remove new line
-		local username = stdout:gsub('%\n','')
-
-		-- Capitalize first letter of username
-		-- Comment it if you're not using your name as your username
-		username = username:sub(1, 1):upper() .. username:sub(2)
-
-		user_name:set_markup('Choose wisely,' .. ' ' .. username .. '!')
-	end
-end, false)
-
 
 local buildButton = function(icon, name)
 
@@ -79,7 +56,7 @@ end
 
 local suspend_command = function()
 	exit_screen_hide()
-	awful.spawn.with_shell(apps.default.lock .. ' & systemctl suspend')
+	awful.spawn.with_shell('systemctl suspend')
 end
 
 local exit_command = function()
@@ -144,7 +121,8 @@ _G.screen.connect_signal("request::desktop_decoration", function(s)
 		height = screen_geometry.height,
 		width = screen_geometry.width,
 		x = screen_geometry.x,
-		y = screen_geometry.y
+		y = screen_geometry.y,
+		bgimage = beautiful.noise(0.4,1)
 	}
 
 	s.exit_screen.bg =  beautiful.background
