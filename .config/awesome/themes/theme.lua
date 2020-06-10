@@ -24,7 +24,7 @@ theme.noise = function(opacity,scale,operator)
     scale = scale or 1
     operator = operator or 'SOFT_LIGHT'
     return function(ctx,cr,w,h)
-        local g = gears.surface('/home/fun/Downloads/n3.png') -- Rectangle2 or n3
+        local g = gears.surface(themes_path .. 'noise_texture.png') -- Rectangle2 or n3
         cr:set_source_surface(g,0,0)
         local pat = cr:get_source()
         local m = pat:get_matrix()
