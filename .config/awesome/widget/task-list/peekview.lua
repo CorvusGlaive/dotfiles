@@ -128,7 +128,6 @@ local function createPeekviewPopup(widget,client)
 
   widget:connect_signal("mouse::enter",function ()
     if client.minimized then return end
-    if peekview_hideTimer.started then peekview_showTimer.timeout = 0 peekview_hideTimer:stop() end
     local idxs = {}
     for i,c in pairs(screen:get_clients(false)) do
       if c.class == client.class then
