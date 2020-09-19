@@ -27,20 +27,21 @@ local TagList = function(s)
         screen = s,
         filter = awful.widget.taglist.filter.noempty,
         buttons = taglist_buttons,
-        -- style   = {
-        --     shape = gears.shape.rounded_rect
-        -- },
+        style   = {
+            shape = function (cr,w,h) return gears.shape.rounded_rect(cr,w,h,2) end
+        },
         widget_template = {
             widget = require("widget.clickable-container"),
             {
-                id = 'background_role',
-                widget = wibox.container.background,
+                widget = wibox.container.margin,
+                margins = dpi(3),
                 {
-                    layout = wibox.layout.stack,
+                    id = 'background_role',
+                    widget = wibox.container.background,
                     {
                         margins = {
-                            left = dpi(8),
-                            right = dpi(8),
+                            left = dpi(6),
+                            right = dpi(6),
                             top = dpi(2),
                             bottom = dpi(2),
                         },
@@ -49,29 +50,9 @@ local TagList = function(s)
                             id = 'text_role',
                             widget = wibox.widget.textbox
                         }
-                    },
-                    {
-                        widget = wibox.container.margin,
-                        top = beautiful.taglist_underline_height,
-                        {
-                            id = "underline_role",
-                            widget = wibox.container.background,
-                            bg = "#fccf05",
-                            {widget = wibox.container.margin},
-                        },
-                    },
+                    }
                 }
-            },
-            create_callback = function (self,tag,idx,obj)
-              local underline = self:get_children_by_id('underline_role')[1]
-              if tag.selected then underline.bg = beautiful.taglist_underline_bg
-              else underline.bg = beautiful.transparent end
-            end,
-            update_callback = function (self,tag,idx,obj)
-              local underline = self:get_children_by_id('underline_role')[1]
-              if tag.selected then underline.bg = beautiful.taglist_underline_bg
-              else underline.bg = beautiful.transparent end
-            end
+            }
         },
 
     }

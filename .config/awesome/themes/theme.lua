@@ -93,10 +93,10 @@ theme.tasklist_fg_focus = "#fff"
 theme.taglist_font = "Inter SemiBold 10"
 
 theme.taglist_bg_normal = theme.transparent
-theme.taglist_bg_focus = "#fccf0500"
+theme.taglist_bg_focus = "#fff"
 theme.taglist_bg_occupied = "#ff000000"
 
-theme.taglist_fg_focus = "#ffffff"
+theme.taglist_fg_focus = "#222"
 theme.taglist_fg_occupied = "#eeeeee"
 theme.taglist_fg_empty = "#444444"
 
