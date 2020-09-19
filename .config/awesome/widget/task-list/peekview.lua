@@ -21,6 +21,7 @@ local peekview_popup = awful.popup {
   preferred_positions = 'top',
   preferred_anchors   = 'middle',
   visible      = false,
+  shape = function(cr,w,h) return gears.shape.rounded_rect(cr,w,h,5) end
 }
 
 local peekview_layout = wibox.widget {
@@ -40,29 +41,19 @@ local function createPeekviewWidget(c, index,idxs)
   local h = dpi(200)   -- widget height
   local ratio = math.min(screen.geometry.width / (screen.geometry.height - beautiful.top_panel_height),
                         cw / ch)
-  local w = h * ratio
-        w = math.floor(w)
+  local w = math.floor(h * ratio)
+  local scale = (cw > ch) and (w / cw) or (h / ch)
+
   peekview_widget = wibox.widget.base.make_widget()
-  peekview_widget.fit = function(self,width,height)
-    return w,h
+
+  function peekview_widget:fit(self,width,height)
+    return w,math.floor(ch * scale)
   end
-  peekview_widget.draw = function(peekview_popup,peekview_widget,cr,width,height)
-    local scale = 0.95
-    local sx,sy,tx,ty
-    if cw > ch then
-      sx = scale * w / cw
-      sy = sx
-    else
-      sy = scale * h / ch
-      sx = sy
-    end
 
-    tx = (w - sx * cw) / 2
-    ty = (h - sy * ch) / 2
-
+  function peekview_widget:draw(peekview_widget,cr,width,height)
     local tmp = gears.surface(c.content)
-    cr:translate(tx, ty)
-    cr:scale(sx,sy)
+    cr:translate(0, 0)
+    cr:scale(scale,scale)
     cr:set_source_surface(tmp, 0, 0)
     cr:paint()
     tmp:finish()
@@ -86,7 +77,8 @@ local function createPeekviewWidget(c, index,idxs)
     }
     peekview_popup.visible = false
   end)
-  return require('widget.clickable-container')(wibox.widget {
+  return require('widget.clickable-container')(
+    wibox.widget {
       layout = wibox.layout.fixed.vertical,
       {
         widget = wibox.container.constraint,
@@ -118,9 +110,25 @@ local function createPeekviewWidget(c, index,idxs)
           }
         }
       },
-      peekview_widget,
+      {
+        widget = wibox.container.margin,
+        margins = dpi(5),
+        {
+          widget = wibox.container.background,
+          forced_height = h,
+          forced_width = w,
+          {
+            widget = wibox.container.place,
+            {
+              widget = wibox.container.background,
+              shape = function(cr,w,h) return gears.shape.rounded_rect(cr,w,h,5) end,
+              peekview_widget,
+            }
+          },
+        }
       },
-      "#ffffff"..beautiful.opacityHex(0.2)
+    },
+    "#ffffff"..beautiful.opacityHex(0.2)
   )
 end
 

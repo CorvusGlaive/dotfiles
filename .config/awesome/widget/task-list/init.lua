@@ -50,8 +50,8 @@ local TaskList = function(s)
           {
             widget  = wibox.container.margin,
             margins = {
-              left = dpi(5),
-              right = dpi(5),
+              left = dpi(7),
+              right = dpi(7),
               top = dpi(5),
               bottom = dpi(3),
             },
@@ -80,15 +80,22 @@ local TaskList = function(s)
       if client.icon then icon_widget.image = client.icon
       else icon_widget.image = require('themes.icons').app_icon end
 
-      -- Hide widget if there is already the same app is running now (Create group by app)
-      local idxs = {}
+      -- Create group by app (class)
+      local group = {}
       for i,c in pairs(clients) do
-        if c.class == client.class then
-          table.insert(idxs,i)
+        if c.class == client.class  then
+          table.insert(group,i)
+          
+        end
+      end
+      -- Move the created widget to its group, if it exists
+      if #group > 1 and index ~= group[1] and (index - group[#group-1] ~= 1) then
+        for i = #clients - 1 ,group[#group - 1] + 1 ,-1 do
+          client:swap(clients[i])
         end
       end
       -- Second condition needs for remain icon in case of Awesome restart
-      if #idxs >= 2 and idxs[1] ~= index then self.visible = false end
+      if #group > 1 and index ~= group[1] then self.visible = false end
 
       createPopup(self,client)
 
@@ -109,9 +116,8 @@ local TaskList = function(s)
           table.insert(group,i)
         end
       end
-
-      if #group >= 2 then
-        if index ~= group[1] then return end
+      if #group > 1 then
+        if index ~= group[1] then self.visible = false return end
         self.hasGroup = true
         underline_layout:reset()
 
