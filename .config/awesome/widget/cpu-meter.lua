@@ -2,7 +2,7 @@ local watch = require("awful.widget.watch")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
-local cpu_meter = wibox.widget.textbox()
+local cpu_meter_text = wibox.widget.textbox()
 local total_prev = 0
 local idle_prev = 0
 
@@ -19,12 +19,24 @@ watch(
     local diff_total = total - total_prev
     local diff_usage = (1000 * (diff_total - diff_idle) / diff_total + 5) / 10
 
-    cpu_meter:set_text(" " .. math.floor( diff_usage ) .. "%")
+    cpu_meter_text:set_text(math.floor( diff_usage ) .. "%")
 
     total_prev = total
     idle_prev = idle
     collectgarbage('collect')
   end
 )
-
+local cpu_meter = wibox.widget {
+  layout = wibox.layout.fixed.horizontal,
+  {
+    widget = wibox.container.margin,
+    margins = {
+      top = dpi(6),
+      bottom = dpi(6),
+      right = dpi(6),
+    },
+    wibox.widget.imagebox(require('themes.icons').cpu)
+  },
+  cpu_meter_text
+}
 return cpu_meter

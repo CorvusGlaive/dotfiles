@@ -6,24 +6,51 @@ local gears = require("gears")
 
 local cmd = require("scripts").audio
 
-local pulse_control = wibox.widget.textbox()
+local pulse_control_text = wibox.widget.textbox()
+local pulse_control_vol_icon = wibox.widget.imagebox()
+local pulse_control_dev_icon = wibox.widget.imagebox()
+local pulse_control = wibox.widget {
+
+        layout = wibox.layout.fixed.horizontal,
+        spacing = dpi(2),
+        {
+            widget = wibox.container.margin,
+            margins = {
+                top = dpi(6),
+                bottom = dpi(6),
+                right = dpi(6),
+            },
+            pulse_control_vol_icon
+        },
+        pulse_control_text,
+        {
+            widget = wibox.container.margin,
+            margins = {
+                left = dpi(6),
+                top = dpi(6),
+                bottom = dpi(6),
+            },
+            pulse_control_dev_icon
+        }
+
+}
 -- pulse_control.font = "SymbolsNerdFont 10"
 local sink_icons = {
-    [1] = "",
-    [2] = "",
-    [3] = "蓼",
+    [1] = require('themes.icons').hdmi,
+    [2] = require('themes.icons').headphones,
+    [3] = require('themes.icons').speaker,
 }
 local vol_icons = {
-    [1] =  " ", -- use first for volume-off state
-    [2] =  " ",
-    [3] =  "墳 ",
-    [4] =  " "
+    [1] =  require('themes.icons').close, -- use first for volume-off state
+    [2] =  require('themes.icons').volume_down,
+    [3] =  require('themes.icons').volume,
+    [4] =  require('themes.icons').volume_up
 }
-local curDevice_icon = ' ' --Default sink icon if there are no matched devices
+local curDevice_icon = require('themes.icons').plus --Default sink icon if there are no matched devices
 
 
 local function getCurDeviceIcon(name)
-    if name == "Razer" then return sink_icons[2]
+    if name == "Razer" or name == "Kraken" then return sink_icons[2]
     elseif name == "Built" then return sink_icons[3]
     elseif name == "GF" then return sink_icons[1] end
     return curDevice_icon
@@ -74,9 +101,12 @@ _G.awesome.connect_signal("daemon::audio", function (dev)
     local devIcon = getCurDeviceIcon(dev.name)
     dev.vol = (dev.vol == nil) and 0 or dev.vol
     if not dev.isMuted then
-        pulse_control.markup = volIcon .. dev.vol .. "%" .. 
-        "<span font='SymbolsNerdFont 11'>  " .. devIcon .. "</span>"
-    else pulse_control.text = "MUTED" end
+        pulse_control_vol_icon:set_image(volIcon)
+        pulse_control_text:set_text(dev.vol.."%")
+        pulse_control_dev_icon:set_image(devIcon)
+    else
+        pulse_control_vol_icon:set_image(require('themes.icons').volume_mute)
+    end
 end)
 
 
