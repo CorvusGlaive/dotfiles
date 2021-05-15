@@ -24,6 +24,17 @@ local tasklist_buttons = gears.table.join(
 
 local TaskList = function(s)
 
+  local function group_widget(bg)
+    local dotSize = dpi(3)
+    return wibox.widget {
+      id = "group_role",
+      widget = wibox.container.background,
+      forced_height = dpi(dotSize + 2),
+      forced_width = dpi(dotSize),
+      shape = gears.shape.circle,
+      bg = bg or "#f00",
+    }
+  end
   local taskList = awful.widget.tasklist {
   screen   = s,
   filter   = awful.widget.tasklist.filter.currenttags,
@@ -35,57 +46,81 @@ local TaskList = function(s)
   -- -- Notice that there is *NO* wibox.wibox prefix, it is a template,
   -- -- not a widget instance.
   widget_template = {
-    id = 'task_widget',
     hasGroup = false,
     widget = require("widget.clickable-container"),
+    bg_focus = beautiful.transparent,
     {
-      id            = 'background_role',
-      widget        = wibox.container.background,
+      widget = wibox.container.margin,
+      left = dpi(5),
+      right = dpi(5),
       {
-        layout = wibox.layout.align.vertical,
-        nil,
+        layout = wibox.layout.stack,
+        fill_space = true,
         {
-          widget = wibox.container.place,
-          halign = 'center',
+          --Background
+          widget = wibox.container.margin,
+          margins = dpi(2),
           {
-            widget  = wibox.container.margin,
-            margins = {
-              left = dpi(7),
-              right = dpi(7),
-              top = dpi(5),
-              bottom = dpi(3),
-            },
+            widget = wibox.container.background,
+            shape = function (cr, w, h)
+              local rate = math.floor(w) ~= math.floor(h) and 8 or 2
+              gears.shape.squircle(cr, w, h, rate)
+            end,
+            {
+              id = "bg_role",
+              widget = wibox.container.background,
+            }
+          }
+        },
+        {
+          --Group indicator
+          widget = wibox.container.margin,
+          right = dpi(-2),
+          {
+            widget = wibox.container.place,
+            valign = "center",
+            halign = "right",
+            -- content_fill_vertical = true,
+            -- forced_width = dpi(25),
+          {
+            id = "underline_role",
+            layout = wibox.layout.flex.vertical,
+            spacing = dpi(1),
+          }
+          }
+        },
+        {
+          --Icon widget
+          widget = wibox.container.place,
+          halign = "center",
+          {
+            widget = wibox.container.margin,
+            margins = dpi(4),
+            -- awful.widget.clienticon
             {
               id = "icon_role",
               widget = wibox.widget.imagebox
             }
           }
         },
-        {
-          id = "underline_role",
-          layout = wibox.layout.flex.horizontal,
-          spacing = dpi(2),
-          {
-            id = 'group_role',
-            widget = wibox.container.background,
-            forced_height = dpi(2),
-            bg = '#ff000000'
-          }
-        },
+
       },
+
     },
     create_callback = function (self,client,index,clients)
       local icon_widget = self:get_children_by_id('icon_role')[1]
+      local bg = self:get_children_by_id("bg_role")[1]
 
       if client.icon then icon_widget.image = client.icon
       else icon_widget.image = require('themes.icons').app_icon end
 
       -- Create group by app (class)
       local group = {}
+      local idFocused
       for i,c in pairs(clients) do
+        if c.active then idFocused = i end
         if c.class == client.class  then
           table.insert(group,i)
-          
         end
       end
       -- Move the created widget to its group, if it exists
@@ -97,12 +132,13 @@ local TaskList = function(s)
       -- Second condition needs for remain icon in case of Awesome restart
       if #group > 1 and index ~= group[1] then self.visible = false end
 
+      bg.bg = (index == idFocused) and beautiful.tasklist_bg_focus or beautiful.transparent
       createPopup(self,client)
 
     end,
     update_callback = function (self,client,index,clients)
       local underline_layout = self:get_children_by_id('underline_role')[1]
-      local group_widget = self:get_children_by_id('group_role')[1]
+      local bg = self:get_children_by_id('bg_role')[1]
 
       local idFocused = 0
       local isFocusInGroup = false
@@ -124,24 +160,19 @@ local TaskList = function(s)
         for _,v in pairs(group) do
           isFocusInGroup = (v == idFocused) and true or isFocusInGroup
 
-          underline_layout:add(wibox.widget {
-            id = 'group_role',
-            widget = wibox.container.background,
-            forced_height = dpi(2),
-            bg = (v == idFocused) and colors[1] or colors[2]
-          })
+          underline_layout:add(group_widget(
+            (v == idFocused) and colors[1] or colors[2]
+          ))
         end
         self.visible = true
-        self.bg = ((index == idFocused) or not isFocusInGroup) and
-        beautiful.transparent or beautiful.tasklist_bg_focus
+        bg.bg = isFocusInGroup and
+        beautiful.tasklist_bg_focus or beautiful.transparent
         return
       end
       self.hasGroup = false
-      self.bg = beautiful.transparent
+      bg.bg = (index == idFocused) and beautiful.tasklist_bg_focus or beautiful.transparent
       self.visible = true
-      self.opacity = 1
       underline_layout:reset()
-      underline_layout:add(group_widget)
     end
     },
   }
