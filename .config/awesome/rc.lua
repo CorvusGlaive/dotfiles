@@ -24,6 +24,7 @@ require("layout")
 --Modulus
 require("module.notifications")
 require("module.auto-start")
+require("module.app-overview")
 -- require("module.decorate-client")
 require("module.wallpaper")
 require("module.exit-screen")
