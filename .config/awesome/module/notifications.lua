@@ -14,15 +14,17 @@ naughty.config.defaults.timeout = 5
 naughty.config.defaults.position = 'top_right'
 naughty.config.defaults.margin = dpi(16)
 naughty.config.defaults.ontop = true
-naughty.config.defaults.font = 'Inter 10'
+naughty.config.defaults.font = 'SF Pro Display 10'
 naughty.config.defaults.icon = nil
 naughty.config.defaults.icon_size = dpi(32)
-naughty.config.defaults.shape = gears.shape.rounded_rect
+naughty.config.defaults.shape = function (cr, w, h)
+  gears.shape.rounded_rect(cr, w, h, 5)
+end
 naughty.config.defaults.bg = btl.background
 -- naughty.config.defaults.bg = btl.colors.black .. btl.opacityHex(0.3)
 naughty.config.defaults.fg = btl.fg_normal
 naughty.config.defaults.border_width = 1
-naughty.config.defaults.border_color = "#6b6b6b"
+naughty.config.defaults.border_color = "#3d3d3d"
 naughty.config.defaults.hover_timeout = nil
 
 local markup  = require("naughty.widget._markup").set_markup
@@ -64,7 +66,7 @@ local function new(args)
           tb,
           tb._private.notification.title,
           tb._private.notification.fg,
-          "Inter Semibold 11"
+          "SF Pro Display Semibold 11"
       )
   end
 
@@ -93,7 +95,7 @@ ruled.notification.connect_signal('request::rules', function()
 	ruled.notification.append_rule {
 		rule       = { urgency = 'normal' },
 		properties = {
-			timeout 			= 0,
+			timeout 			= 5,
 			implicit_timeout 	= 0
 		}
 	}
@@ -128,7 +130,7 @@ naughty.connect_signal("request::display", function(n)
       layout = wibox.layout.flex.vertical,
       spacing = dpi(1),
       spacing_widget = wibox.widget {
-        color = "#c1c1c1",
+        color = "#3d3d3d",
         orientation = 'horizontal',
         widget = wibox.widget.separator,
       },
@@ -136,13 +138,18 @@ naughty.connect_signal("request::display", function(n)
     widget = naughty.list.actions,
     style = { underline_normal = false, underline_selected = true },
     widget_template = {
-      widget = wibox.container.background,
-      forced_height = dpi(30),
+      widget = require("widget.clickable-container"),
+      bg = "#333",
+      bg_focus = "#444",
       {
-        widget = wibox.container.place,
+        widget = wibox.container.margin,
+        left = dpi(5),
+        right = dpi(5),
         {
-          widget = wibox.widget.textbox,
           id = 'text_role',
+          widget = wibox.widget.textbox,
+          align = "center",
+          valign = "center"
         },
       },
     },
@@ -150,7 +157,10 @@ naughty.connect_signal("request::display", function(n)
   naughty.layout.box {
     notification = n,
     screen = awful.screen.focused(),
-    shape = gears.shape.rounded_rect,
+    type = "notification",
+    shape = function (cr, w, h)
+      gears.shape.rounded_rect(cr, w, h, 5)
+    end,
     widget_template = {
       id = "background_role",
       widget = naughty.container.background,
@@ -163,31 +173,38 @@ naughty.connect_signal("request::display", function(n)
             widget = wibox.widget.textbox,
             text = n.app_name,
             align='center',
-            font = 'Inter Semibold 10'
+            font = 'SF Pro Display Medium 10'
           }
         },
         {
           widget = wibox.container.background,
           bgimage = btl.noise(),
           {
-            widget = wibox.container.margin,
-            margins = 10,
+            strategy = "max",
+            width = btl.notification_max_width or dpi(400),
+            widget = wibox.container.constraint,
             {
-              strategy = "max",
-              width = btl.notification_max_width or dpi(400),
               widget = wibox.container.constraint,
+              strategy = "min",
+              width = dpi(350),
               {
-                strategy = "min",
-                width = dpi(350),
-                widget = wibox.container.constraint,
+                -- spacing = dpi(1),
+                -- spacing_widget = wibox.widget {
+                --   widget = wibox.widget.separator,
+                --   orientation = "vertical",
+                --   color = "#3d3d3d"
+                -- },
+                layout = wibox.layout.fixed.horizontal,
+                fill_space = true,
                 {
-                  spacing = 0,
-                  layout = wibox.layout.fixed.horizontal,
+                  widget = wibox.container.margin,
+                  margins = dpi(10),
                   {
                     fill_space = true,
                     spacing    = 10,
                     layout     = wibox.layout.fixed.horizontal,
                     {
+                      -- Icon
                       widget = wibox.container.place,
                       valign = 'center',
                       {
@@ -196,20 +213,21 @@ naughty.connect_signal("request::display", function(n)
                       }
                     },
                     {
+                      -- Text and title
                       widget = wibox.container.constraint,
                       strategy = "exact",
-                      width = dpi(280),
+                      width = dpi(260),
                       {
                         spacing = 2,
                         layout  = wibox.layout.fixed.vertical,
                         title,
                         naughty.widget.message,
-                      },
+                      }
                     },
                   },
-                  action_list,
-                }
-              }
+                },
+                action_list,
+              },
             }
           }
         },
@@ -231,7 +249,7 @@ function log_this(title,text,bgColor)
     title = title,
     message = tostring(text),
     bg = colors[bgColor],
-    font = "RobotoMedium 14",
+    font = "SF Pro Display 14",
     timeout= 2
   }
 end
