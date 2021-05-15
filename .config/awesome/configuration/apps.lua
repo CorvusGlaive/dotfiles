@@ -1,7 +1,7 @@
 local fs = require("gears.filesystem")
 return {
     default = {
-        terminal = "kitty",
+        terminal = "kitty -c="..fs.get_configuration_dir().."configuration/kitty.conf",
         editor = os.getenv("EDITOR") or "nano",
         rofi = "rofi -show drun"
     },
