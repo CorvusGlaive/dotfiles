@@ -28,27 +28,24 @@ local TagList = function(s)
         filter = awful.widget.taglist.filter.noempty,
         buttons = taglist_buttons,
         style   = {
-            shape = function (cr,w,h) return gears.shape.rounded_rect(cr,w,h,2) end
+            shape = function (cr, w, h) gears.shape.squircle(cr, w, h, 2) end
         },
         widget_template = {
             widget = require("widget.clickable-container"),
             {
-                widget = wibox.container.margin,
-                margins = dpi(3),
+                widget = wibox.container.constraint,
+                strategy = "min",
+                width = beautiful.top_panel_height,
                 {
-                    id = 'background_role',
-                    widget = wibox.container.background,
+                    widget = wibox.container.margin,
+                    margins = dpi(2),
                     {
-                        margins = {
-                            left = dpi(6),
-                            right = dpi(6),
-                            top = dpi(2),
-                            bottom = dpi(2),
-                        },
-                        widget = wibox.container.margin,
+                        id = 'background_role',
+                        widget = wibox.container.background,
                         {
                             id = 'text_role',
-                            widget = wibox.widget.textbox
+                            widget = wibox.widget.textbox,
+                            align = "center"
                         }
                     }
                 }

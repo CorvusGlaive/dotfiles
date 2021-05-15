@@ -14,23 +14,25 @@ local menubar = require("menubar")
 
 -- {{{ Key bindings
 local globalkeys = gears.table.join(
-    awful.key({ modkey,           }, "z",   function() 
-        require('naughty').notification {
-            icon='/home/fun/.config/awesome/icons/awesome32.png',
-            app_name = 'System notification',
-            title = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
-            message = 'El snort gentleman got milk jimi hendrix off-piste'.. 
-            'sweat irrigator,, decathlon champion off-piste old west sheriff jimi hendrix'..
-            ' sweat irrigator, gentleman got milk el snort landed gentry id?',
-            actions = {
-                require('naughty').action {name='Apply'},
-                require('naughty').action {name='Reject'},
-                require('naughty').action {name='Settings'},
-            },
-            urgency = 'critical',
-        }
+    awful.key({ modkey,           }, "z",   function()
+        -- require('naughty').notification {
+        --     icon='/home/fun/.config/awesome/icons/awesome32.png',
+        --     app_name = 'System notification',
+        --     title = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+        --     message = 'El snort gentleman got milk jimi hendrix off-piste'..
+        --     'sweat irrigator,, decathlon champion off-piste old west sheriff jimi hendrix'..
+        --     ' sweat irrigator, gentleman got milk el snort landed gentry id?',
+        --     actions = {
+        --         require('naughty').action {name='Apply'},
+        --         require('naughty').action {name='Reject'},
+        --         require('naughty').action {name='Settings'},
+        --     },
+        --     urgency = 'critical',
+        -- }
+        _G.awesome.emit_signal("module::app-overview")
     end,
               {description="test notification", group="awesome"}),
+    awful.key({ modkey }, "space", function () awful.widget.keyboardlayout():next_layout(); end),
     awful.key({ modkey,           }, "F1",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
@@ -142,13 +144,13 @@ local globalkeys = gears.table.join(
             awful.spawn.easy_async(audio.up, function()end)
             toggleVolOSD()
         end,
-        {description = "Increase volume by 5%", group = "Media Key"}),
+        {description = "Increase volume", group = "Media Key"}),
     awful.key({     }, "XF86AudioLowerVolume",
         function()
             awful.spawn.easy_async(audio.down, function()end)
             toggleVolOSD()
         end,
-        {description = "Decrease volume by 5%", group = "Media Key"}),
+        {description = "Decrease volume", group = "Media Key"}),
     awful.key({     }, "XF86AudioMute",
         function()
             awful.spawn.easy_async(audio.togmute, function()end)

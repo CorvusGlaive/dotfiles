@@ -39,7 +39,11 @@ local month_calendar = awful.widget.calendar_popup.month {
         padding = dpi(3)
     },
 }
-month_calendar:attach( mytextclock, "br")
+month_calendar.bgimage = beautiful.noise()
+month_calendar.shape = function(cr,w,h)
+    gears.shape.rounded_rect(cr, w, h, dpi(5))
+end
+month_calendar:attach( mytextclock, "br", { on_hover=false })
 
 
 return mytextclock

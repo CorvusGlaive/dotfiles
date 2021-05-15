@@ -21,8 +21,8 @@ ruled.client.connect_signal('request::rules', function ()
       screen = awful.screen.preferred,
       placement = awful.placement.centered,
       shape = function(cr,w,h)
-        gears.shape.rounded_rect(cr, w, h, 8)
-      end
+        gears.shape.rounded_rect(cr, w, h, 4)
+      end,
    },
   }
  -- Add titlebars to normal clients and dialogs
@@ -34,11 +34,13 @@ ruled.client.connect_signal('request::rules', function ()
         "gnome-",
         "org.gnome.",
         "code - insiders",
+        "code",
         "vivaldi-snapshot",
         "lollypop",
         "chromium",
         "eog",
-        "gedit"
+        "gedit",
+		    "Navigator"
       }
     },
     properties = {titlebars_enabled = true}
@@ -67,15 +69,15 @@ ruled.client.connect_signal('request::rules', function ()
       ontop = true,
       sticky = true,
       shape = function (cr,w,h)
-          gears.shape.rounded_rect(cr,w,h,8)
+          gears.shape.rounded_rect(cr,w,h,4)
       end
     },
     -- Setting position and size for picture-in-picture clients
     callback = function (c)
       c.isPopup = true
       if c.instance == "Toolkit" then
-        c.width = c.width - (c.width * 0.35)
-        c.height = c.height - (c.height * 0.35)
+        -- c.width = c.width - (c.width * 0.35)
+        -- c.height = c.height - (c.height * 0.35)
       end
       c.x = c.screen.geometry.width - c.width - dpi(7)
       c.y = c.screen.geometry.height - c.height - dpi(30)
@@ -89,7 +91,7 @@ ruled.client.connect_signal('request::rules', function ()
       ontop = true,
       floating = true,
       shape = function(cr,w,h)
-        gears.shape.rounded_rect(cr, w, h, 8)
+        gears.shape.rounded_rect(cr, w, h, 4)
       end,
       skip_decoration = true,
     }
@@ -140,7 +142,7 @@ local function handleCorners(client)
     client.shape = gears.shape.rectangle
   else
     client.shape = function (cr, w, h)
-        gears.shape.rounded_rect(cr, w, h, 8)
+        gears.shape.rounded_rect(cr, w, h, 4)
     end
   end
 end

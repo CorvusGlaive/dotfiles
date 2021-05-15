@@ -14,8 +14,7 @@ local peekview_widget = wibox.widget.base.make_widget()
 
 local peekview_popup = awful.popup {
   widget = peekview_widget,
-  bgimage = beautiful.noise(0.2),
-  border_color = '#6b6b6b',
+  border_color = "#3d3d3d",
   border_width = 1,
   ontop        = true,
   preferred_positions = 'top',
@@ -115,16 +114,8 @@ local function createPeekviewWidget(c, index,idxs)
         margins = dpi(5),
         {
           widget = wibox.container.background,
-          forced_height = h,
-          forced_width = w,
-          {
-            widget = wibox.container.place,
-            {
-              widget = wibox.container.background,
-              shape = function(cr,w,h) return gears.shape.rounded_rect(cr,w,h,5) end,
-              peekview_widget,
-            }
-          },
+          shape = function(cr,w,h) return gears.shape.rounded_rect(cr,w,h,5) end,
+          peekview_widget,
         }
       },
     },

@@ -115,7 +115,7 @@ _G.screen.connect_signal("request::desktop_decoration", function(s)
 	s.exit_screen = wibox
 	{
 		screen = s,
-		type = 'splash',
+		-- type = 'splash',
 		visible = false,
 		ontop = true,
 		height = screen_geometry.height,
@@ -144,7 +144,7 @@ _G.screen.connect_signal("request::desktop_decoration", function(s)
 
 		auto_start          = true,
 		stop_event          = 'release',
-		keypressed_callback = function(self, mod, key, command) 
+		keypressed_callback = function(self, mod, key, command)
 
 			if key == 's' then
 				suspend_command()
@@ -184,7 +184,7 @@ _G.screen.connect_signal("request::desktop_decoration", function(s)
 	end
 
 	-- Signals
-	_G.awesome.connect_signal("module::exit_screen_show", function() 
+	_G.awesome.connect_signal("module::exit_screen_show", function()
 
 		exit_screen_grabber:start()
 	end)

@@ -4,7 +4,7 @@ local gears = require("gears")
 local listen_script = require('scripts').audio.listen
 -- local curDevice_script = require('scripts').audio.curDevice
 
-local kill_listeners = "ps x | grep 'pulseaudio-control.bash' | grep -v grep | awk '{print $1}' | xargs kill"
+local kill_listeners = "ps x | grep 'pactl subscribe' | grep -v grep | awk '{print $1}' | xargs kill"
 
 
 local function emit_audio_info(vol,sink,isMuted, devName)

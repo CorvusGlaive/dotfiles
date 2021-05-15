@@ -85,7 +85,7 @@ theme.top_panel_height = dpi(25)
 
 --Tasklist-------------------------
 theme.tasklist_bg_normal = theme.transparent
-theme.tasklist_bg_focus = "#fff3"
+theme.tasklist_bg_focus = "#ccc"
 theme.tasklist_fg_focus = "#fff"
 ----------------------------------
 

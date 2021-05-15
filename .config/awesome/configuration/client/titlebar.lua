@@ -19,8 +19,8 @@ _G.client.connect_signal("request::titlebars", function(c)
     }
     if c.class == "kitty" then
         args = {
-            bg_normal = "#101010" .. btl.opacityHex(0.5),
-            bg_focus = "#101010" .. btl.opacityHex(0.5),
+            bg_normal = "#101010" .. btl.opacityHex(0.65),
+            bg_focus = "#101010" .. btl.opacityHex(0.65),
             bgimage = btl.noise()
         }
     end
