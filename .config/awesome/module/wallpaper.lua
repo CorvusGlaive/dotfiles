@@ -7,6 +7,13 @@ local delayInMins = 15
 local mins = (delayInMins - tonumber(os.date("%M")) % delayInMins) * 60
 local firstRunDelay = mins - tonumber(os.date("%S"))
 
+local lines = io.popen('find '..os.getenv("HOME")..'/Pictures/ -type f'):lines()
+local files = {}
+for file in lines do
+    local pos = math.random(#files + 1)
+    table.insert(files, pos, file)
+end
+local currentFile = 1
 return gears.timer {
     autostart = true,
     timeout = firstRunDelay,
@@ -17,7 +24,9 @@ return gears.timer {
             self.timeout = delayInMins * 60
             self:again()
         end
-        awful.spawn.easy_async_with_shell('feh --bg-fill -z ~/Pictures', function ()end)
+        require("beautiful").wallpaper = files[currentFile]
+        gears.wallpaper.maximized(files[currentFile])
+        currentFile = currentFile >= #files and 1 or currentFile + 1
     end
 }
 
