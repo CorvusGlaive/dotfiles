@@ -145,19 +145,19 @@ local globalkeys = gears.table.join(
     awful.key({     }, "XF86AudioRaiseVolume",
         function()
             awful.spawn.easy_async(audio.up, function()end)
-            toggleVolOSD()
+            _G.awesome.emit_signal("module::volume-osd")
         end,
         {description = "Increase volume", group = "Media Key"}),
     awful.key({     }, "XF86AudioLowerVolume",
         function()
             awful.spawn.easy_async(audio.down, function()end)
-            toggleVolOSD()
+            _G.awesome.emit_signal("module::volume-osd")
         end,
         {description = "Decrease volume", group = "Media Key"}),
     awful.key({     }, "XF86AudioMute",
         function()
             awful.spawn.easy_async(audio.togmute, function()end)
-            toggleVolOSD()
+            _G.awesome.emit_signal("module::volume-osd")
         end,
         {description = "Mute", group = "Media Key"})
 )

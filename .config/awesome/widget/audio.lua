@@ -73,25 +73,22 @@ end
 pulse_control:buttons(
     gears.table.join(
         awful.button({ }, 1 , function (c)
-            -- if isMuted then
             awful.spawn.easy_async_with_shell(cmd.togmute, function() end)
-            -- naughty.notify {text = "Clicked LEFT"}
+            _G.awesome.emit_signal("module::volume-osd")
         end),
         awful.button({ }, 2 , function (c)
             awful.spawn.easy_async_with_shell(cmd.change, function() end)
-            -- naughty.notify {text = "Clicked MIDDLE"}
         end),
         awful.button({ }, 3 , function (c)
             -- awful.spawn.easy_async_with_shell(cmd .. " --mute", function() end)
-            -- naughty.notify {text = "Clicked RIGHT"}
         end),
         awful.button({ }, 4 , function (c)
             awful.spawn.easy_async_with_shell(cmd.up, function() end)
-            -- naughty.notify {text = "Clicked WHEELUP"}
+            _G.awesome.emit_signal("module::volume-osd")
         end),
         awful.button({ }, 5 , function (c)
             awful.spawn.easy_async_with_shell(cmd.down, function() end)
-            -- naughty.notify {text = "Clicked WHEELDOWN"}
+            _G.awesome.emit_signal("module::volume-osd")
         end)
     )
 )
