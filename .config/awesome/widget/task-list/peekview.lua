@@ -28,7 +28,7 @@ local peekview_layout = wibox.widget {
   spacing = dpi(1),
   spacing_widget =  {
     forced_width = dpi(1),
-    color = "#b2b2b2",
+    color = "#3d3d3d",
     orientation = 'vertical',
     widget = wibox.widget.separator,
   }
@@ -144,7 +144,15 @@ local function createPeekviewPopup(widget,client)
       widget = wibox.container.background,
       peekview_layout
     }
-    peekview_showTimer:again()
+    if peekview_hideTimer.started and peekview_popup.visible then
+      peekview_hideTimer:stop()
+
+      peekview_popup:move_next_to(screen.top_panel)
+      local curWidgetGeo = _G.mouse.current_widget_geometry
+      peekview_popup.x  = curWidgetGeo.x - peekview_popup.width / 2 + curWidgetGeo.width / 2
+    else
+      peekview_showTimer:again()
+    end
   end)
 
   widget:connect_signal("mouse::leave",function (w)
