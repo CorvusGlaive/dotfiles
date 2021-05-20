@@ -32,6 +32,9 @@ local globalkeys = gears.table.join(
         _G.awesome.emit_signal("module::app-overview")
     end,
               {description="test notification", group="awesome"}),
+    awful.key({ modkey }, "v", function ()
+        _G.awesome.emit_signal("module::clipboard")
+    end),
     awful.key({ modkey }, "space", function () awful.widget.keyboardlayout():next_layout(); end),
     awful.key({ modkey,           }, "F1",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),

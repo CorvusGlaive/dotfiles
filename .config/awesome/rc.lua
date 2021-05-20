@@ -29,6 +29,7 @@ require("module.app-overview")
 require("module.wallpaper")
 require("module.exit-screen")
 require("module.volume-osd")
+require("module.clipboard")
 
 --Configurations
 require("configuration.client")
