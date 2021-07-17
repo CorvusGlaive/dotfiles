@@ -8,7 +8,7 @@ require('telescope').setup {
     --   vertical = {width_padding = 0.15, height_padding = 0.1, preview_height = 0.6},
     -- },
     prompt_prefix = '> ',
-    prompt_position = 'bottom',
+    layout_config = { prompt_position = 'bottom' },
     sorting_strategy = 'descending',
     mappings = {
       i = {
@@ -34,7 +34,7 @@ require('telescope').setup {
         n = { ["<c-d>"] = "delete_buffer" },
       },
     },
-    find_files = { hidden = true, layout_config = { preview_width = 0.65 } },
+    find_files = { hidden = true, layout_defaults = { preview_width = 0.65 } },
   },
 
 }
