@@ -153,7 +153,7 @@ return packer.startup(function()
     -- requires = "nvim-lua/plenary.nvim",
   }
   -- Indentline
-  plug { "lukas-reineke/indent-blankline.nvim", branch = "lua" }
+  plug { "lukas-reineke/indent-blankline.nvim" }
 
   -- Others
   plug "phaazon/hop.nvim" -- easymotion
