@@ -86,6 +86,7 @@ return packer.startup(function()
 
   -- Autopairs
   plug "windwp/nvim-autopairs"
+  plug "yamatsum/nvim-cursorline"
 
   -- Autocomplete
   plug "hrsh7th/nvim-compe"
@@ -103,7 +104,10 @@ return packer.startup(function()
     "folke/tokyonight.nvim",
     "savq/melange",
     "marko-cerovac/material.nvim",
-    "bluz71/vim-nightfly-guicolors"
+    "bluz71/vim-nightfly-guicolors",
+    "rose-pine/neovim",
+    "projekt0n/github-nvim-theme",
+    "Pocco81/Catppuccino.nvim"
     -- requires = "rktjmp/lush.nvim",
   }
 
