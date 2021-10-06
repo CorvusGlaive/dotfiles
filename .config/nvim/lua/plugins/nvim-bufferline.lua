@@ -1,7 +1,7 @@
 local map = require("keymaps")
 
-map('n', '<TAB>', ':BufferLineCycleNext<CR>')
-map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>')
+map('n', '<S-l>', ':BufferLineCycleNext<CR>')
+map('n', '<S-h>', ':BufferLineCyclePrev<CR>')
 map('n', '<S-x>', ':Bdelete! %<CR>')
 
 require'bufferline'.setup {

@@ -20,6 +20,9 @@ map("t", '<C-w>j', [[<C-\><C-n><C-W>j]])
 map("t", '<C-w>k', [[<C-\><C-n><C-W>k]])
 map("t", '<C-w>l', [[<C-\><C-n><C-W>l]])
 
+-- Center search result
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
 
 -- Change orientation of splitted windows
 map("n", "<leader>wv", "<C-W>t <C-W>H")
@@ -41,13 +44,16 @@ map("n", "<C-Right>", ":vertical resize -2<CR>")
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
+-- Yank the rest of the line
+map("n", "Y", "yg_")
+
 -- Switch buffers
 -- map("n", "<TAB>", ":bnext<CR>")
 -- map("n", "<S-TAB>", ":bprevious<CR>")
 
 -- Move selected line / block of text in visual mode
-map('x', 'K', ':move \'<-2<CR>gv-gv')
-map('x', 'J', ':move \'>+1<CR>gv-gv')
+map('x', 'K', ':move \'<-2<CR>gv=gv')
+map('x', 'J', ':move \'>+1<CR>gv=gv')
 
 -- Better nav for omnicomplete
 map("i", "<C-j>", "<C-n>")
