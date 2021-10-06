@@ -49,6 +49,11 @@ function setColorscheme()
 
       StatusLine { bg = r.bg },
       StatusLineNC { gui = "underline", fg = co(r.bg, 5), bg = r.bg },
+
+      IndentBlanklineChar { fg = co(r.bg, 5) },
+
+      EndOfBuffer { fg = r.bg },
+      NvimTreeEndOfBuffer { fg = NvimTreeNormal.bg },
     }
   end)
 

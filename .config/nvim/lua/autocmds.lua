@@ -21,7 +21,7 @@ au {
       "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
     },
     { "BufWritePre", "*", [[%s/\s\+$//e]] },
-    { "BufEnter", "NvimTree", "set signcolumn=no" },
+    { "BufEnter", "NvimTree", "setlocal signcolumn=no" },
     -- { "BufWritePost", "*.lua", ":luafile %"}
   },
   _lspSagaCursorCommands = {

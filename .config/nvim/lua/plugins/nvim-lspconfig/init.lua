@@ -103,10 +103,7 @@ local function setup_servers()
   lspinstall.setup()
   local installed = lspinstall.installed_servers()
   for _, server in pairs(installed) do
-    local config = servers[server] or
-                       {
-          root_dir = lspconfig.util.root_pattern({ '.git/', '.' }),
-        }
+    local config = servers[server] or {}
     config.on_attach = on_attach
     -- print(tostring(server), vim.inspect(lspconfig[server]))
     lspconfig[server].setup(config)
