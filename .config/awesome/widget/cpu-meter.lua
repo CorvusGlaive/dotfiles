@@ -37,6 +37,11 @@ local cpu_meter = wibox.widget {
     },
     wibox.widget.imagebox(require('themes.icons').cpu)
   },
-  cpu_meter_text
+  {
+    widget = wibox.container.constraint,
+    strategy = "min",
+    width = beautiful.top_panel_height,
+    cpu_meter_text
+  }
 }
 return cpu_meter

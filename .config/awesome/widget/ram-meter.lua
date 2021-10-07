@@ -28,7 +28,12 @@ local ram_meter = wibox.widget {
     },
     wibox.widget.imagebox(require('themes.icons').memory)
   },
-  ram_meter_text
+  {
+    widget = wibox.container.constraint,
+    strategy = "min",
+    widht = require("beautiful").top_panel_height,
+    ram_meter_text
+  }
 }
 
 return ram_meter
