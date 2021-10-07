@@ -124,6 +124,7 @@ local TopPanel = function(s)
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(1),
             tray,
+            addClickableMargins(require("widget.night-light")),
             addClickableMargins(require("widget.audio")),
             addClickableMargins(require("widget.ram-meter"),nil,false),
             addClickableMargins(require("widget.cpu-meter"),nil,false),
