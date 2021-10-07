@@ -24,8 +24,9 @@ return gears.timer {
             self.timeout = delayInMins * 60
             self:again()
         end
-        require("beautiful").wallpaper = files[currentFile]
-        gears.wallpaper.maximized(files[currentFile])
+		local surface = gears.surface(files[currentFile])
+        require("beautiful").wallpaper = surface
+        gears.wallpaper.maximized(surface)
         currentFile = currentFile >= #files and 1 or currentFile + 1
     end
 }

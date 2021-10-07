@@ -30,7 +30,7 @@ _G.screen.connect_signal("request::desktop_decoration", function (s)
       bg = "#ffb300",
       bgimage = function (ctx, cr, width, height)
         local ratio = width / height
-        local img = gears.surface(beautiful.wallpaper or gears.colors("#ffb300"))
+        local img = beautiful.wallpaper or gears.colors("#ffb300")
         local imgW,imgH = gears.surface.get_size(img)
         local scale = imgW / imgH > ratio and height / imgH or width / imgW
 
