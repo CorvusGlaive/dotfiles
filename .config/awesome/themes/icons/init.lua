@@ -45,6 +45,8 @@ return {
 	batt_discharging	= dir .. 'battery-discharge.svg',
 	toggled_on 			= dir .. 'toggled-on.svg',
 	toggled_off			= dir .. 'toggled-off.svg',
-	app_icon			= dir .. 'app.svg'
+	app_icon			= dir .. 'app.svg',
+	nightLight_on = dir .. 'nightLight-on.svg',
+	nightLight_off = dir .. 'nightLight-off.svg',
 
 }
