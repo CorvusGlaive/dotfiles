@@ -21,7 +21,7 @@ local function build(widget,bg_focus,bg_normal)
 			local w = _G.mouse.current_wibox
 			if w then
 				old_cursor, old_wibox = w.cursor, w
-				w.cursor = 'hand1'
+				w.cursor = 'hand2'
 			end
 			if container.on_hover then
 				container.on_hover(container,...)
