@@ -1,0 +1,43 @@
+[theme]
+theme = "slick"
+[icons]
+icons = "material-nf"
+
+
+[[block]]
+block = "keyboard_layout"
+driver = "sway"
+sway_kb_identifier = "0:1:Power_Button"
+[block.mappings]
+"English (US)" = "En"
+"Russian (N/A)" = "Ru"
+[[block.click]]
+button = "left"
+cmd = "swaymsg input '*' xkb_switch_layout next"
+
+[[block]]
+block = "sound"
+driver = "pulseaudio"
+show_volume_when_muted = true
+[[block.click]]
+button = "left"
+cmd = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+
+[[block]]
+block = "temperature"
+chip = "atk0110-*"
+format = " $icon $max "
+
+[[block]]
+block = "memory"
+format = " $icon $mem_used_percents $swap_used "
+format_alt = " $icon $swap_used "
+
+[[block]]
+block = "cpu"
+
+
+[[block]]
+block = "time"
+interval = 5
+format = " $icon $timestamp.datetime(f:'%a, %d %b %T') "

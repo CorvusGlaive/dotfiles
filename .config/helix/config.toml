@@ -1,0 +1,24 @@
+theme = "catppuccin_latte"
+
+[editor]
+line-number = "relative"
+bufferline = "multiple"
+color-modes = true
+true-color = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "version-control", "diagnostics"]
+
+[keys.normal]
+space.l.f = ":format"
+space.c = ":bclose"
+H = ":bprev"
+L = ":bnext"
+
+[keys.insert]
+"C-c" = "normal_mode"
